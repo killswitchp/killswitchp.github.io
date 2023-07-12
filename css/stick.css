@@ -1,0 +1,106 @@
+:root {
+	--color-white: white;
+	--color-black: black;
+	--color-navy: navy;
+	--color-green: green;
+	--color-red: red;
+	--color-brown: brown;
+	--color-purple: purple;
+	--color-orange: orange;
+	--color-yellow: yellow;
+	--color-lime: lime;
+	--color-teal: teal;
+	--color-cyan: #009fff;
+	--color-blue: blue;
+	--color-fuchsia: fuchsia;
+	--color-gray: gray;
+	--color-lightgray: lightgray;
+}
+
+
+
+	
+  
+  #buddy_path
+  {
+    position: relative;
+    width: calc(100% - 2rem);
+    left: 1rem;
+    z-index: 1;
+    max-width: 100%;
+    overflow: hidden;
+    height: 2rem;
+    border: 2px dashed var(--color-lime);
+    border-top: none;
+
+    #buddy
+    {
+      left: 0;
+      top: 0;
+      position: relative;
+      width: 1.6rem;
+      height: 3rem;
+
+      #bubble {
+        position: absolute;
+        top: 0;
+        font-size: .7rem;
+        white-space: pre;
+        height: 1rem;
+        width: fit-content;
+
+        &.point-left{
+          right: 2rem;
+          &:after {
+            content: '-';
+          }
+        }
+
+        &.point-right{
+          left: 2rem;
+          &:before {
+            content: '-';
+          }
+        }
+      }
+
+      #buddy_ani {
+        width: 1.6rem;
+        height: 3rem;
+
+        pre {
+          margin: 0;
+        }
+      }
+    }
+  }
+  
+  &.error {
+    color: var(--color-red);
+    
+    a {
+      color: var(--color-orange);
+    }
+    
+    #buddy_path {
+      border-color: var(--color-red);
+    }
+  }
+
+
+.fg00 { color: var(--color-white) }
+.fg01 { color: var(--color-black) }
+.fg02 { color: var(--color-navy) }
+.fg03 { color: var(--color-green) }
+.fg04 { color: var(--color-red) }
+.fg05 { color: var(--color-brown) }
+.fg06 { color: var(--color-purple) }
+.fg07 { color: var(--color-orange) }
+.fg08 { color: var(--color-yellow) }
+.fg09 { color: var(--color-lime) }
+.fg10 { color: var(--color-teal) }
+.fg11 { color: var(--color-cyan) }
+.fg12 { color: var(--color-blue) }
+.fg13 { color: var(--color-fuchsia) }
+.fg14 { color: var(--color-gray) }
+.fg15 { color: var(--color-lightgray) }

@@ -1,0 +1,367 @@
+
+html {
+  
+    border: 5px solid #669bbc;
+    border-radius: 20px;
+    box-shadow: 0 0 .2rem #fff,
+            0 0 .2rem #fff,
+            0 0 2rem #669bbc,
+            0 0 0.8rem #669bbc,
+            0 0 2.8rem #669bbc,
+            inset 0 0 1.3rem #669bbc; 
+            min-height: 99%;
+           
+            
+  }
+
+ 
+
+ 
+
+#banner{
+  color:#660002;
+}
+
+#social {
+  color:#eeeeee;
+}
+
+#echo{
+  color:#eeeeee;
+}
+
+
+#rat{
+  color:#eeeeee;
+}
+
+#phrase1{
+   color: #eeeeee;
+  
+}
+
+
+#projects
+{
+    color:#eeeeee;
+}
+
+#email
+{
+    color:#eeeeee;
+}
+#about
+{
+  color:#eeeeee;
+ 
+}
+ 
+#output{
+  color:#92dce5;
+  font-family: monospace;
+ 
+  
+}
+
+#whoami , #sudo, #ls, #date{
+  color:#eeeeee;
+  
+  
+}
+
+td,tr,table
+{
+  color:#669bbc;
+  font-weight:0px;
+  font:monospace;
+  }
+
+#help-table
+{
+color:#669bbc;
+font-weight:0px;
+font:monospace;
+}
+
+
+ 
+
+
+
+ 
+ 
+ body{
+        background-color:#171717; 
+        margin: 0; 
+  padding: 15px 20px;
+  min-height: 99%;
+  width: 100%;
+  font-family: monospace;
+  overflow-x: hidden;
+  
+    }
+
+   
+
+
+
+.terminal-banner {
+    margin-top:1.2rem;
+    color:   #669bbc;  
+    font-weight: 1000;
+    line-height: normal;
+    text-shadow: 0 0 4px  #669bbc;  
+    font-size:1.2rem;
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 0;
+    letter-spacing:0.05rem;
+   
+    margin-bottom:1.2rem;  
+}
+
+.displaytable {
+  color:  #eeeeee;  
+  text-shadow: 0 0 5px     #eeeeee;  
+  font-weight: 10;
+  font-family: monospace;
+  font-size:1rem;
+  border: 1 px solid #eee;
+  border-collapse: collapse;
+  
+}
+
+#input{
+  margin-top: 0px;
+  margin-bottom: 0px;
+  color:    #669bbc;  
+  
+}
+
+
+
+p {
+  font-weight: normal;
+    color:      #669bbc;  
+    font-family: monospace;
+    font-size:1rem;
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 0;
+    letter-spacing:0.05rem;
+   
+     
+
+    
+}
+
+
+.banner{
+  height:30px;
+  width:1000px;
+}
+
+.terminal-input{
+    font-size:1rem;
+    color:      #669bbc;   
+    font-family: monospace;
+    background-color: #171717; 
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 0;
+    letter-spacing:0.05rem;
+  
+    outline:none;
+    border:0;
+}
+
+
+
+.stickman {
+  height: 10em;
+  width: 5em;
+  position: absolute;
+  top:20%
+ 
+}
+.stickman .head {
+  height: 2.5em;
+  width: 2.5em;
+  position: absolute;
+  top: 0;
+  left: 25%;
+  background-color:  #669bbc;
+  border-radius: 100%;
+}
+.stickman .head .lefteye {
+  height: 0.3125em;
+  width: 0.3125em;
+  position: absolute;
+  top: 32.5%;
+  right: 65%;
+  background: #eeeeee;
+  border-radius: 100%;
+}
+.stickman .head .righteye {
+  height: 0.3125em;
+  width: 0.3125em;
+  position: absolute;
+  top: 32.5%;
+  right: 25%;
+  background: #eeeeee;
+  border-radius: 100%;
+}
+.stickman .head .mouth {
+  height: 0.15625em;
+  width: 0.7142857143em;
+  position: absolute;
+  bottom: 25%;
+  right: 40%;
+  transform: rotate(11.25deg);
+  background-color: #eee;
+}
+.stickman .body {
+  height: 3.3333333333em;
+  width: 0.3125em;
+  position: absolute;
+  top: 2.5em;
+  left: 50%;
+  margin-left: -0.15625em;
+  background-color:  #669bbc;
+}
+.stickman .body .rightarm {
+  height: 2.5em;
+  width: 0.3125em;
+  position: absolute;
+  top: 0;
+  transform: rotate(-45deg);
+  transform-origin: top;
+  background:  #669bbc;
+}
+.stickman .body .rightarm::after {
+  content: "";
+  height: 1.6666666667em;
+  width: 0.3125em;
+  position: absolute;
+  bottom: 0;
+  transform: rotate(90deg);
+  transform-origin: right bottom;
+  background:  #669bbc;
+  animation: 1s walk-arm-after infinite;
+}
+.stickman .body .leftarm {
+  height: 2.5em;
+  width: 0.3125em;
+  position: absolute;
+  top: 0;
+  transform: rotate(35deg);
+  transform-origin: top;
+  background:  #669bbc;
+}
+.stickman .body .leftarm::after {
+  content: "";
+  height: 1.6666666667em;
+  width: 0.3125em;
+  position: absolute;
+  bottom: 0;
+  transform-origin: left bottom;
+  background:  #669bbc;
+}
+.stickman .body .leftleg {
+  height: 2.0833333333em;
+  width: 0.3125em;
+  position: absolute;
+  bottom: -2.0833333333em;
+  transform: rotate(-15deg);
+  transform-origin: top;
+  background:  #669bbc;
+}
+.stickman .body .leftleg::after {
+  content: "";
+  height: 2.0833333333em;
+  width: 0.3125em;
+  position: absolute;
+  bottom: -2.0833333333em;
+  transform-origin: top;
+  background:  #669bbc;
+}
+.stickman .body .rightleg {
+  height: 2.0833333333em;
+  width: 0.3125em;
+  position: absolute;
+  bottom: -2.0833333333em;
+  transform: rotate(15deg);
+  transform-origin: top;
+  background:  #669bbc;
+}
+.stickman .body .rightleg::after {
+  content: "";
+  height: 2.0833333333em;
+  width: 0.3125em;
+  position: absolute;
+  bottom: -2.0833333333em;
+  transform-origin: top;
+  background:  #669bbc;
+}
+
+@keyframes walk-body {
+  0% {
+    margin-top: -5.625em;
+    padding-bottom: 0.625em;
+  }
+  50% {
+    margin-top: -5em;
+    padding-bottom: 0;
+  }
+  100% {
+    margin-top: -5.625em;
+    padding-bottom: 0.625em;
+  }
+}
+@keyframes walk-arm {
+  0% {
+    transform: rotate(-45deg);
+  }
+  50% {
+    transform: rotate(45deg);
+  }
+  100% {
+    transform: rotate(-45deg);
+  }
+}
+@keyframes walk-arm-after {
+  0% {
+    transform: rotate(67.5deg);
+  }
+  50% {
+    transform: rotate(90deg);
+  }
+  100% {
+    transform: rotate(67.5deg);
+  }
+}
+@keyframes walk-leg {
+  0% {
+    transform: rotate(-90deg);
+  }
+  50% {
+    transform: rotate(45deg);
+  }
+  100% {
+    transform: rotate(-90deg);
+  }
+}
+@keyframes walk-leg-after {
+  0% {
+    transform: rotate(112.5deg);
+  }
+  25% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(55deg);
+  }
+  100% {
+    transform: rotate(112.5deg);
+  }
+}
