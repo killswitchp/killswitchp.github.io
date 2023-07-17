@@ -1,0 +1,417 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary:  green;
+  --secondary: #ffffff;
+  --background: #000000;
+  --line-space: 0.5rem;
+  --letter-space: 0.05rem;
+  --terminal-font: monospace;
+  --font-size: 1rem;
+}
+
+body {
+  background-color: var(--background);
+  overflow: hidden;
+  height: 100vh;
+  padding: 8px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+#terminal {
+  padding: 15px;
+  border: 2px solid var(--primary);
+  border-radius: 10px;
+  box-shadow: 0 0 0.8rem var(--primary), inset 0 0 0.8rem var(--primary);
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  color: var(--primary);
+  font-size: var(--font-size);
+  font-family: var(--terminal-font);
+  letter-spacing: var(--letter-space);
+}
+
+#prerender > * {
+  margin: var(--line-space) 0;
+}
+
+.figlet {
+  text-shadow: 0 0 5px var(--primary);
+}
+
+#killfetch {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+#killfetch img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  user-select: none;
+}
+
+
+
+.error {
+  color: #660002;
+}
+
+.message {
+  color: var(--secondary);
+}
+
+.glow-text {
+  color: var(--secondary);
+  text-shadow: 0 0 5px var(--secondary);
+}
+
+#welcome:after {
+  content: "🙂";
+  animation: wink 1s linear infinite;
+}
+
+#output > * {
+  margin: var(--line-space) 0;
+}
+
+#help-table {
+  color: var(--primary);
+  border-collapse: collapse;
+  font-size: var(--font-size);
+}
+
+#help-table tr {
+  margin: var(--line-space);
+}
+
+.help-options {
+  color: var(--secondary);
+  text-shadow: 0 0 5px var(--secondary);
+}
+
+.help-description {
+  color: var(--primary);
+  padding-left: 2rem;
+}
+
+.prompt-wrapper {
+  display: flex;
+  gap: 0.5rem;
+}
+
+#prompt {
+  display: inline-block;
+}
+
+#terminal-input {
+  font-size: 1rem;
+  color: var(--primary);
+  font-family: monospace;
+  background-color: var(--background);
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 0;
+  letter-spacing: var(--letter-space);
+  outline: none;
+  border: 0;
+  display: inline-block;
+  flex: 1 1 auto;
+}
+
+.stickman {
+  height: 10rem;
+  width: 5rem;
+  position: relative;
+  margin-top: 1rem;
+}
+
+.stickman .head {
+  height: 2.5em;
+  width: 2.5em;
+  position: absolute;
+  top: 0;
+  left: 25%;
+  background-color: var(--primary);
+  border-radius: 100%;
+}
+.stickman .head .lefteye {
+  height: 0.3125em;
+  width: 0.3125em;
+  position: absolute;
+  top: 32.5%;
+  right: 65%;
+  background: var(--secondary);
+  border-radius: 100%;
+}
+.stickman .head .righteye {
+  height: 0.3125em;
+  width: 0.3125em;
+  position: absolute;
+  top: 32.5%;
+  right: 25%;
+  background: var(--secondary);
+  border-radius: 100%;
+}
+.stickman .head .mouth {
+  height: 0.15625em;
+  width: 0.7142857143em;
+  position: absolute;
+  bottom: 25%;
+  right: 40%;
+  transform: rotate(11.25deg);
+  background-color: var(--secondary);
+}
+.stickman .body {
+  height: 3.3333333333em;
+  width: 0.3125em;
+  position: absolute;
+  top: 2.5em;
+  left: 50%;
+  margin-left: -0.15625em;
+  background-color: var(--primary);
+}
+.stickman .body .rightarm {
+  height: 2.5em;
+  width: 0.3125em;
+  position: absolute;
+  top: 0;
+  transform: rotate(-45deg);
+  transform-origin: top;
+  background: var(--primary);
+}
+.stickman .body .rightarm::after {
+  content: "";
+  height: 1.6666666667em;
+  width: 0.3125em;
+  position: absolute;
+  bottom: 0;
+  transform: rotate(90deg);
+  transform-origin: right bottom;
+  background: var(--primary);
+  animation: 1s walk-arm-after infinite;
+}
+.stickman .body .leftarm {
+  height: 2.5em;
+  width: 0.3125em;
+  position: absolute;
+  top: 0;
+  transform: rotate(35deg);
+  transform-origin: top;
+  background: var(--primary);
+}
+.stickman .body .leftarm::after {
+  content: "";
+  height: 1.6666666667em;
+  width: 0.3125em;
+  position: absolute;
+  bottom: 0;
+  transform-origin: left bottom;
+  background: var(--primary);
+}
+.stickman .body .leftleg {
+  height: 2.0833333333em;
+  width: 0.3125em;
+  position: absolute;
+  bottom: -2.0833333333em;
+  transform: rotate(-15deg);
+  transform-origin: top;
+  background: var(--primary);
+}
+.stickman .body .leftleg::after {
+  content: "";
+  height: 2.0833333333em;
+  width: 0.3125em;
+  position: absolute;
+  bottom: -2.0833333333em;
+  transform-origin: top;
+  background: var(--primary);
+}
+.stickman .body .rightleg {
+  height: 2.0833333333em;
+  width: 0.3125em;
+  position: absolute;
+  bottom: -2.0833333333em;
+  transform: rotate(15deg);
+  transform-origin: top;
+  background: var(--primary);
+}
+.stickman .body .rightleg::after {
+  content: "";
+  height: 2.0833333333em;
+  width: 0.3125em;
+  position: absolute;
+  bottom: -2.0833333333em;
+  transform-origin: top;
+  background: var(--primary);
+}
+
+#ad {
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  bottom: 0px;
+  right: 0px;
+}
+
+#ad img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+#date{
+  color: var(--secondary);
+}
+
+
+#vi {
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  z-index: 10;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--background);
+  border: 2px solid var(--primary);
+  padding: 2px;
+}
+
+#editor-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 2px;
+  cursor: pointer;
+  background-color: var(--background);
+  color: var(--primary);
+}
+
+#editor {
+  color: var(--secondary);
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  padding: 8px;
+  font-family: var(--terminal-font);
+  outline: none;
+  border: none;
+  overflow-wrap: break-word;
+
+  /* firefox and ie */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Animations */
+@keyframes walk-body {
+  0% {
+    margin-top: -5.625em;
+    padding-bottom: 0.625em;
+  }
+  50% {
+    margin-top: -5em;
+    padding-bottom: 0;
+  }
+  100% {
+    margin-top: -5.625em;
+    padding-bottom: 0.625em;
+  }
+}
+@keyframes walk-arm {
+  0% {
+    transform: rotate(-45deg);
+  }
+  50% {
+    transform: rotate(45deg);
+  }
+  100% {
+    transform: rotate(-45deg);
+  }
+}
+@keyframes walk-arm-after {
+  0% {
+    transform: rotate(67.5deg);
+  }
+  50% {
+    transform: rotate(90deg);
+  }
+  100% {
+    transform: rotate(67.5deg);
+  }
+}
+@keyframes walk-leg {
+  0% {
+    transform: rotate(-90deg);
+  }
+  50% {
+    transform: rotate(45deg);
+  }
+  100% {
+    transform: rotate(-90deg);
+  }
+}
+@keyframes walk-leg-after {
+  0% {
+    transform: rotate(112.5deg);
+  }
+  25% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(55deg);
+  }
+  100% {
+    transform: rotate(112.5deg);
+  }
+}
+
+@keyframes wink {
+  0% {
+    content: "🙂";
+  }
+  100% {
+    content: "😉";
+  }
+}
+
+@media screen and (max-width: 480px) {
+  #killfetch {
+    flex-direction: column;
+    align-items: start;
+  }
+}
+
+/* Scroll-Bar */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #262626;
+  border-radius: 10px;
+  height: 100px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #525252;
+}
