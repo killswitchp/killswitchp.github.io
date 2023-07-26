@@ -1,6 +1,17 @@
 function executeCommand(userInput) {
   const [cmd, ...rest] = userInput.split(" ");
   const args = rest.join(" ");
+  const paragraph = (text, className = null) => {
+    const p = document.createElement("p");
+    p.textContent = text;
+    if(className) p.className = className;
+    return p;
+  };
+  const span = text => {
+    const s = document.createElement("span");
+    s.textContent = text;
+    return s;
+  };
 
   switch (cmd) {
     case "":
@@ -22,22 +33,22 @@ function executeCommand(userInput) {
 
     case "social":
       let social = "Will update when i need a job!!!!!!!!!";
-      return `<p class="message">${social}</p>`;
+      return paragraph(social, "message");
 
     case "id":
       let id = "uid=1002(guest) gid=1002(guest) groups=1002(guest)";
-      return `<p class="message">${id}</p>`;
+      return paragraph(id, "message");
 
     case "echo":
-      return `<p class="message">${userInput.substring(5)}</p>`;
+      return paragraph(userInput.substring(5), "message");
 
     case "about":
       let about = "I'm Paavai Aram.(Will update info when I need a job probably)";
-      return `<p class="message">${about}</p>`;
+      return paragraph(about, "message");
 
     case "banner":
       let bannerText = "You are not the admin!!";
-      return `<p class='error'>"${bannerText}"</p>`;
+      return paragraph(bannerText, "error");
 
     case "projects":
       let projects = [
@@ -50,15 +61,18 @@ function executeCommand(userInput) {
       return `<a class="message" href="https://mail.google.com/mail/u/0/#inbox?compose=CllgCJqTfghgTtLnhcHJQhMrsSWsjlVQqBzLmWlvDFkrfqrgPrXmmsFKWDlCGvpkwmXJbmdfnPg">${mail}</a>`;
 
     case "whoami":
-      return `<p class="message">guest</p>`;
+      return paragraph("guest", "message");
 
     case "sudo":
       window.open("https://www.youtube.com/watch?v=IVRlYIjKy0A");
-      return "<p class=message> lol,dont try to hack me and i banned sudo;)</p>";
+      return paragraph("lol,dont try to hack me and i banned sudo;)", "message");
 
     case "ls":
-      const list = pages.map((item) => `<span>${item}</span>`).join(" ");
-      return `<div class=message>${list}</div>`;
+      const list = pages.map(item => span(item + " "));
+      const div = document.createElement(div);
+      div.className = "message";
+      div.append(...list);
+      return div;
 
     case "clear":
       outputEl.innerHTML = '<a id="before"></a>';
@@ -68,13 +82,13 @@ function executeCommand(userInput) {
     case "date":
       const currentDate = new Date();
       const formattedDate = currentDate.toString();
-      return `<p id='date'>${formattedDate}</p>`;
+      return paragraph(formattedDate, "date");
 
     case "cat":
       if (!pages.includes(args))
-        return `<p class=error>Blog does not exist, "ls" -- lists all blogs </p>`;
+        return paragraph(`Blog does not exist, "ls" -- lists all blogs`, "error");
       window.open(args);
-      return "<p>Loading................</p>";
+      return paragraph("Loading................");
 
 
     case "killfetch":
@@ -92,13 +106,13 @@ function executeCommand(userInput) {
           styleElement.innerHTML = `:root { --primary: ${colour}; }`;
           document.head.appendChild(styleElement);
       
-          return `<p class="success">Colour changed</p>`;
+          return paragraph("Colour changed", "success");
 
         }
-else 
-{
-  return `<p class="success">No colour enterred.Sample input --> theme red</p>`
-}
+        else 
+        {
+          return paragraph("No colour enterred.Sample input --> theme red", "success");
+        }
         }
 
         
@@ -111,25 +125,25 @@ else
 
     case "vi":
       viDOM.classList.remove("hidden");
-      editorDOM.innerHTML = localStorage.getItem("vi-content");
+      editorDOM.textContent = localStorage.getItem("vi-content");
       editorDOM.focus();
       return;
   }
 
   if (userInput == "cat blog1.html") {
     window.open("blog1.html");
-    return "<p>Loading................</p>";
+    return paragraph("Loading................");
   }
 
   else if
   (userInput == "cat pnpt.html") {
     window.open("blog1.html");
-    return "<p>Loading................</p>";
+    return paragraph("Loading................");
   }
 
   else{
 
-  return `<p class=message>Command not found: ${cmd}`;
+  return paragraph(`Command not found: ${cmd}`, "message");
 }
 }
 
@@ -140,9 +154,16 @@ function handleInput(event) {
     // Enter key
     const userInput = inputEl.value.trim();
     inputEl.value = "";
-    outputEl.innerHTML += `<div class=prompt-wrapper><span>${prompt}</span><span>${userInput}</span></div>`;
+    const promptWrapper = document.createElement("div");
+    promptWrapper.className = "prompt-wrapper";
+    const promptSpan = document.createElement("span");
+    const inputSpan = document.createElement("span");
+    promptSpan.textContent = prompt;
+    inputSpan.textContent = userInput;
+    promptWrapper.append(promptSpan, inputSpan);
+    outputEl.append(promptWrapper);
     let result = executeCommand(userInput);
-    if (result) outputEl.innerHTML += result;
+    if (result) outputEl.append(result);
   }
 }
 
@@ -164,7 +185,7 @@ observer.observe(target, {
 
 editorBtn.addEventListener("click", () => {
   console.log("hi");
-  let content = editorDOM.innerHTML;
+  let content = editorDOM.textContent;
   localStorage.setItem("vi-content", content);
   viDOM.classList.add("hidden");
 });
