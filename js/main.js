@@ -19,16 +19,16 @@ function executeCommand(userInput) {
 
     case "help":
       let commandList = Object.entries(commands);
-      let table = "<table id=help-table>";
+      let table = document.createElement("table");
+      table.setAttribute("id", "help-table");
       commandList.forEach(([key, value]) => {
-        table +=
+        table.innerHTML +=
           "<tr><td class=help-options>" +
           key +
           "</td><td class=help-description>" +
           value +
           "</td></tr>";
       });
-      table += "</table>";
       return table;
 
     case "social":
@@ -47,18 +47,25 @@ function executeCommand(userInput) {
       return paragraph(about, "message");
 
     case "banner":
-      let bannerText = "You are not the admin!!";
+      let bannerText = "\"You are not the admin!!\"";
       return paragraph(bannerText, "error");
 
     case "projects":
       let projects = [
         "I will update the list of projects i'm working on soon....",
       ];
-      return `<p id=projects>"${projects[0]}"</p>`;
+      const projectsList = document.createElement("p");
+      projectsList.setAttribute("id", "projects");
+      projectsList.textContent = '"' + projects[0] + '"';
+      return projectsList;
 
     case "email":
       let mail = "Contact Me via gmail";
-      return `<a class="message" href="https://mail.google.com/mail/u/0/#inbox?compose=CllgCJqTfghgTtLnhcHJQhMrsSWsjlVQqBzLmWlvDFkrfqrgPrXmmsFKWDlCGvpkwmXJbmdfnPg">${mail}</a>`;
+      const link = document.createElement("a");
+      link.className = "message";
+      link.setAttribute("href", "https://mail.google.com/mail/u/0/#inbox?compose=CllgCJqTfghgTtLnhcHJQhMrsSWsjlVQqBzLmWlvDFkrfqrgPrXmmsFKWDlCGvpkwmXJbmdfnPg");
+      link.textContent = mail;
+      return link;
 
     case "whoami":
       return paragraph("guest", "message");
@@ -69,7 +76,7 @@ function executeCommand(userInput) {
 
     case "ls":
       const list = pages.map(item => span(item + " "));
-      const div = document.createElement(div);
+      const div = document.createElement("div");
       div.className = "message";
       div.append(...list);
       return div;
@@ -82,7 +89,10 @@ function executeCommand(userInput) {
     case "date":
       const currentDate = new Date();
       const formattedDate = currentDate.toString();
-      return paragraph(formattedDate, "date");
+      const dateContainer = document.createElement("p");
+      dateContainer.setAttribute("id", "date");
+      dateContainer.textContent = formattedDate;
+      return dateContainer;
 
     case "cat":
       if (!pages.includes(args))
