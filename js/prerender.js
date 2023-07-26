@@ -80,16 +80,16 @@ function killfetch(data = {}, element = true) {
   const dataContainer = document.createElement("div");
   dataContainer.className = "data";
   dataContainer.append(...[
-        ["Browser:", "Chrome"],
-        ["OS:", getOS()],
-        ["IP:", data.ip || "?????"],
-        ["Longitude:", data.longitude || "?????"],
-        ["Latitude:", data.latitude || "?????"],
-        ["Origin:", data.region || "?????"],
-        ["Country:", data.country_name || "?????"],
-        ["Time:", new Date().toLocaleTimeString()],
-        ["Date:", new Date().toLocaleDateString()],
-        ["Resolution:", window.screen.width, "x", window.screen.height],
+        ["Browser: ", "Chrome"],
+        ["OS: ", getOS()],
+        ["IP: ", data.ip || "?????"],
+        ["Longitude: ", data.longitude || "?????"],
+        ["Latitude: ", data.latitude || "?????"],
+        ["Origin: ", data.region || "?????"],
+        ["Country: ", data.country_name || "?????"],
+        ["Time: ", new Date().toLocaleTimeString()],
+        ["Date: ", new Date().toLocaleDateString()],
+        ["Resolution: ", window.screen.width, " x ", window.screen.height],
   ].map(spanify));
 
   container.append(image, dataContainer);
