@@ -3,13 +3,13 @@ function executeCommand(userInput) {
   const args = rest.join(" ");
   const paragraph = (text, className = null) => {
     const p = document.createElement("p");
-    p.textContent = text;
+    p.innerText = text;
     if(className) p.className = className;
     return p;
   };
   const span = text => {
     const s = document.createElement("span");
-    s.textContent = text;
+    s.innerText = text;
     return s;
   };
 
@@ -56,7 +56,7 @@ function executeCommand(userInput) {
       ];
       const projectsList = document.createElement("p");
       projectsList.setAttribute("id", "projects");
-      projectsList.textContent = '"' + projects[0] + '"';
+      projectsList.innerText = '"' + projects[0] + '"';
       return projectsList;
 
     case "email":
@@ -64,7 +64,7 @@ function executeCommand(userInput) {
       const link = document.createElement("a");
       link.className = "message";
       link.setAttribute("href", "https://mail.google.com/mail/u/0/#inbox?compose=CllgCJqTfghgTtLnhcHJQhMrsSWsjlVQqBzLmWlvDFkrfqrgPrXmmsFKWDlCGvpkwmXJbmdfnPg");
-      link.textContent = mail;
+      link.innerText = mail;
       return link;
 
     case "whoami":
@@ -91,7 +91,7 @@ function executeCommand(userInput) {
       const formattedDate = currentDate.toString();
       const dateContainer = document.createElement("p");
       dateContainer.setAttribute("id", "date");
-      dateContainer.textContent = formattedDate;
+      dateContainer.innerText = formattedDate;
       return dateContainer;
 
     case "cat":
@@ -135,7 +135,7 @@ function executeCommand(userInput) {
 
     case "vi":
       viDOM.classList.remove("hidden");
-      editorDOM.textContent = localStorage.getItem("vi-content");
+      editorDOM.innerText = localStorage.getItem("vi-content");
       editorDOM.focus();
       return;
   }
@@ -168,8 +168,8 @@ function handleInput(event) {
     promptWrapper.className = "prompt-wrapper";
     const promptSpan = document.createElement("span");
     const inputSpan = document.createElement("span");
-    promptSpan.textContent = prompt;
-    inputSpan.textContent = userInput;
+    promptSpan.innerText = prompt;
+    inputSpan.innerText = userInput;
     promptWrapper.append(promptSpan, inputSpan);
     outputEl.append(promptWrapper);
     let result = executeCommand(userInput);
@@ -195,7 +195,7 @@ observer.observe(target, {
 
 editorBtn.addEventListener("click", () => {
   console.log("hi");
-  let content = editorDOM.textContent;
+  let content = editorDOM.innerText;
   localStorage.setItem("vi-content", content);
   viDOM.classList.add("hidden");
 });
