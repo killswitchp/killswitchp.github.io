@@ -61,68 +61,52 @@ function getOS() {
   return Name;
 }
 
-function killfetch(data = {}) {
-  return `
-   <div id="killfetch">
-          <img id= "main-img" src="assets/rats.gif" alt="main image" />
-          <div class="data">
-            <div>
-              <span>Browser:</span>
-              <span>Chrome</span>
-            </div>
-            <div>
-              <span>Browser:</span>
-              <span>${getOS()}</span>
-            </div>
-            <div>
-              <span>IP:</span>
-              <span>${data.ip || "?????"}</span>
-            </div>
-            <div>
-              <span>Longitude:</span>
-              <span>${data.longitude || "?????"}</span>
-            </div>
-            <div>
-              <span>Latitude:</span>
-              <span>${data.latitude || "?????"}</span>
-            </div>
-            <div>
-              <span>Origin:</span>
-              <span>${data.region || "?????"}</span>
-            </div>
-            <div>
-              <span>Country:</span>
-              <span>${data.country_name || "?????"}</span>
-            </div>
-            <div>
-              <span>Time:</span>
-              <span>${new Date().toLocaleTimeString()}</span>
-            </div>
-            <div>
-              <span>Date:</span>
-              <span>${new Date().toLocaleDateString()}</span>
-            </div>
-            <div>
-              <span>Resolution:</span>
-              <span>${window.screen.width}</span>
-              <span>x</span>
-              <span>${window.screen.height}</span>
-            </div>
-          </div>
-        </div> `;
+function killfetch(data = {}, element = true) {
+  const container = document.createElement("div");
+  container.setAttribute("id", "killfetch");
+  const image = document.createElement("img");
+  image.setAttribute("id", "main-img");
+  image.src = "assets/rats.gif";
+  image.alt = "main image";
+  const spanify = data => {
+    const outer = document.createElement("div");
+    outer.append(...data.map(n => {
+      const s = document.createElement("span");
+      s.textContent = n;
+      return s;
+    }));
+    return outer;
+  }
+  const dataContainer = document.createElement("div");
+  dataContainer.className = "data";
+  dataContainer.append(...[
+        ["Browser:", "Chrome"],
+        ["OS:", getOS()],
+        ["IP:", data.ip || "?????"],
+        ["Longitude:", data.longitude || "?????"],
+        ["Latitude:", data.latitude || "?????"],
+        ["Origin:", data.region || "?????"],
+        ["Country:", data.country_name || "?????"],
+        ["Time:", new Date().toLocaleTimeString()],
+        ["Date:", new Date().toLocaleDateString()],
+        ["Resolution:", window.screen.width, "x", window.screen.height],
+  ].map(spanify));
+
+  container.append(image, dataContainer);
+  return element ? container : container.outerHTML;
 }
 
 async function getIpApi(place = "pre") {
   try {
     const res = await fetch("https://ipapi.co/json/");
     const data = await res.json();
-    if (place === "pre") preRenderDOM.innerHTML += killfetch(data);
+    if (place === "pre") preRenderDOM.innerHTML += killfetch(data, false);
     if (place === "out")
-      document.getElementById("output").innerHTML += killfetch(data);
+      document.getElementById("output").append(killfetch(data));
   } catch (err) {
-    if (place === "pre") preRenderDOM.innerHTML += killfetch();
+    if (place === "pre") preRenderDOM.innerHTML += killfetch({}, false);
     if (place === "out")
-      document.getElementById("output").innerHTML += killfetch();
+      document.getElementById("output").append(killfetch());
   }
 }
 
@@ -138,7 +122,7 @@ function preRender(opt) {
       preRenderDOM.innerHTML += stickman;
       break;
     case "killfetch":
-      preRenderDOM.innerHTML += killfetch();
+      preRenderDOM.innerHTML += killfetch({}, false);
       break;
     case "hackerman":
       getIpApi();
