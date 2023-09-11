@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=0.4">
+    <title>Malware Analysis</title>
+    <link rel="icon" href="favicon_io (3)/favicon-32x32.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/wannacryransomware.css">
+</head>
+<body>
+   
+    <div class="container">
+        
+        
+        
+        <br>
+        
+            <div class="neon-line"></div>
+          
+    
+   
+        <p id="title">
+            <div class=container>
+                <div class=beautiful id=BE>Malware Analysis of Wannacry Ransomware</div>
+                
+              </div>
+              
+              <br>
+              
+                  <div class="neon-line"></div>
+                
+        </p>
+<br>
+<p id="sub-title">
+    1. Introduction:  
+</p>
+<p>I completed TCM Security's <a href="https://academy.tcm-sec.com/p/practical-malware-analysis-triage"_blank" class="here-link">PMAT course</a>. A very good course to do if you are interested in malware analysis (very beginner-friendly). The course covers static and dynamic analysis of malware. You learn all this by analyzing various real malware samples. The final capstone malware of this course is wannacry ransomware. I planned to write a technical blog analysing wannacry ransomware.</p>
+
+<image src="image/malware.png" height="500" width="700"  class="center-image1"></image>
+   
+<br>
+<br>
+<br>
+
+    <div class="neon-line"></div>
+    <p id="sub-title">
+    2. About Wannacry Ransomware:
+</p>
+    <image src="image/wannacry.png" height="500" width="700"  class="center-image2"></image>
+
+    <br>
+<br>
+<br>
+</p>
+<p>
+    "It's highly likely that most of us have encountered the term 'WannaCry' in the news or on the internet at some point. Initially, one might assume it was named because of the distress it caused, but its true full name is  <span style="color:
+    red;text-shadow: 0 0 5px red;">'WannaCryptor'</span>.This name is derived from its primary function, which is encrypting files on the victim's system.
+    </p>
+    
+    <p>
+    WannaCry is a notorious malware that exhibits dual functionality, acting as both ransomware and a worm:
+    </p>
+    <p id="sub-title2"><span style="color:magneta ;text-shadow: 0 0 5px magenta;">(i) Why it is a ransomware 💸:</span>
+   
+    <p>
+    Upon execution, it encrypts all the files on the victim's computer and demands a ransom for the decryption key. This characteristic is why it's often associated with the term 'cry.' However, the complexity of WannaCry goes further.
+    </p>
+    
+    <p id="sub-title2"><span style="color:magneta ;text-shadow: 0 0 5px magenta;"> (ii) Why it is a worm 🐛:</span>
+    <p>
+    Once infecting the victim, it spreads like a worm to the other computers in the network using </span> <span style="color:
+    #00a2ed;text-shadow: 0 0 5px #00a2ed;"> eternal blue</span>  vulnerability and this spreading requires no user interaction and happens automatically. It affects the other computers in the network only if they are vulnerable to </span> <span style="color:
+    #00a2ed;text-shadow: 0 0 5px #00a2ed;"> eternal blue</span>  i.e. if they use SMBv1 protocol.
+    </p>
+
+    <div class="neon-line"></div>
+
+
+    <p id="sub-title">
+        3. Basic Static Analysis of Wannacry Ransomware:
+        
+    </p>
+       
+<p> Static Analysis of malware is analysing it without detonating it.</p>
+<p id="sub-title2"><span style="color:magneta ;text-shadow: 0 0 5px magenta;"> (i) Analysing using floss:</span></p>
+<p>Initially, I used 'floss' without the '-n' option, which resulted in producing an output with a lot of junk strings. Then, I utilized 'floss' with the '-n' option to specify the minimum length of strings to be extracted from the binary. I chose a value of 7 to filter out the junk characters.</p>
+
+    <div class="code-block">
+
+        
+        <code>
+            <pre>
+            floss -n 7 Ransomware.wannacry.exe.malz > wannacry1.txt
+        </pre>
+        </code>
+        <button class="copy-button" onclick="copyCode()">Copy</button>
+    </div>
+
+    <p>Important strings present in the output:</p>
+    <ul>
+<li>
+   
+    We could see that there are 3 DOS headers indicating the presence of 3 other executables, we were also able to find one the executable which is mssecsvc.exe
+
+</li>
+
+    <image src="wc image/Picture1.png" height="400" width="602"  class="center-image"></image>
+   
+    <image src="wc image/Picture2.png" height="400" width="602"  class="center-image"></image>
+    
+    <image src="wc image/Picture3.png" height="400" width="602"  class="center-image"></image>
+    <br>
+    <li>We could see SMB shares being accessed in the network of the infected machine.</li>
+    <li>We also discovered the second executable i.e. tasksche.exe which appears to be intentionally misspelled. (misspelling TaskSchd.exe)</li>
+    <li>There is a url --> http:// www[.]iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea[.]com (could be a C2 domain) </li>
+    <li>attrib +h might be used to hide some directory</li>
+    <li>Icacls is used as well.</li>
+    <li>We can also see a lot of cryptographic API's</li>
+    <br>
+    <image src="wc image/Picture4.png" height="400" width="602"  class="center-image"></image>
+    <br>
+    <image src="wc image/Picture5.png" height="400" width="602"  class="center-image"></image>
+
+</ul>
+
+<p id="sub-title2"><span style="color:magneta ;text-shadow: 0 0 5px magenta;"> (ii) Using PEstudio to further analyze:</span></p>
+<li>SHA-256 hash => 6C382A1C16DBA41B4FF6F0D728E9E92AEBFE2EE0C7FEB30A0E63B15EAF6C4B44</li>
+<br>
+<image src="wc image/Picture6.png" height="500" width="702"  class="center-image"></image>
+<br>
+<li> The malware's architecture is 32 bit and the magic byte MZ indicates that it is an executable .The malware is written in C++: </li>
+<br>
+<image src="wc image/Picture7.png" height="500" width="702"  class="center-image"></image>
+<br>
+<li>1️⃣ => These service API's indicate that some service might be created for persistence</li>
+<li> 2️⃣ => These API's indicate some internet related activities</li>
+<li> 3️⃣=> These are cryptography related API's </li>
+<br>
+<image src="wc image/Picture8.png" height="500" width="702"  class="center-image"></image>
+<br>
+<br>
+<br>
+<div class="neon-line"></div>
+<p id="sub-title">
+    3. Basic Dynamic Analysis of Wannacry Ransomware:💣
+    
+</p>
+<p id="sub-title2"><span style="color:magneta ;text-shadow: 0 0 5px magenta;"> (i) Initial Detonation 💣 without connecting to the internet:</span></p>
+<li>The malware can be run with administrative🤠 privileges only.</li>
+<li>After detonating, firstly the files get encrypted and their extension gets changed to WNCRY. After that, an executable called @WanaDecryptor@.exe gets added to the desktop. Furthermore, a ransom note and also 2 images are added to the desktop. Finally, the desktop background image has been changed to the image that was previously added to the desktop, indicating that our files have been encrypted.</li>
+<li>Another important thing I noted here is that executable files are unaffected by this encryption. (This malware targets certain types of files like images, text files, zip files)</li>
+<li>Most of all we can confirm that this malware is <span style="color:green;text-shadow: 0 0 5px green;"> ransomware💸 </span> since it encrypts all the files and asks for ransom for decryption.</li>
+<image src="wc image/Picture9.png" height="400" width="602"  class="center-image"></image>
+<br>
+<li>I tried to open an image (cosmo.jpeg which is present on the Desktop) which was encrypted (cosmo.jpeg.WNCRY) by wannacry but I was unable to open it:</li>
+<br>
+<image src="wc image/Picture10.png" height="400" width="602"  class="center-image"></image>
+<br>
+<li>A clear image of a file with encrypted extension:</li>
+<br>
+<image src="wc image/Picture11.png" height="400" width="602"  class="center-imageb"></image>
+<br>
+
+<p id="sub-title2"><span style="color:magneta ;text-shadow: 0 0 5px magenta;"> (ii) Checking for Network indicators using Procmon : (without connecting to the internet)</span></p>
+<li>We run process monitor while detonating the malware (without connecting to the internet). Process monitor captured all the events happening in the system while the malware gets detonated.</li>
+<li>We could see a file being created in C:\Windows called <span style="color:#ffd300  ;text-shadow: 0 0 5px #ffd300 ;">tasksche.exe </span> which appears to have intentionally misspelled TaskSchd.exe</li>
+<br>
+<image src="wc image/Picture12.png" height="400" width="602"  class="center-image"></image>
+<br>
+<li>I manually navigated in the file system to confirm that <span style="color:#ffd300  ;text-shadow: 0 0 5px #ffd300 ;">tasksche.exe </span> was created and it indeed got created:</li>
+<br>
+<image src="wc image/Picture13.png" height="400" width="602"  class="center-image"></image>
+
+<br>
+<li>Now I was very interested in finding what <span style="color:#ffd300  ;text-shadow: 0 0 5px #ffd300 ;">tasksche.exe </span> does.</li>
+<li>The PID of the process i.e. <span style="color:#ffd300  ;text-shadow: 0 0 5px #ffd300 ;">tasksche.exe </span>ie 4460 (data obtained from procmon), We can filter the processes with tasksche.exe as parent process (parent pid filter in procmon) alone in procmon. This will help us find what tasksche does.</li>
+<li>we could see within C:\ProgramData (hidden directory by default), a hidden directory called ochuttdlb605 is created.</li>
+<br>
+<image src="wc image/Picture15.png" height="400" width="602"  class="center-image"></image>
+<br>
+<li>One thing we can confirm is that <span style="color:#ffd300  ;text-shadow: 0 0 5px #ffd300 ;">tasksche.exe </span> is one of the important executables and it basically creates the secret directory ochuttdlb605 which contains all other executables and encryption related keys and everything else related to the malware. This one of the first executables thats executed as we detonate the malware and this basically in turn does all the destructive stuffs (encrypting the files).</li>
+<li>We can view various files here and each of these files has an important functionality: (the functionality of all these files will be discussed in depth in section 4)</li>
+<br>
+<image src="wc image/Picture14.png" height="400" width="602"  class="center-image"></image>
+<br>
+
+
+<p id="sub-title2"><span style="color:magneta ;text-shadow: 0 0 5px magenta;"> (iii) Checking for Network indicators using Process Hacker 2 : (without connecting to the internet)</span></p>
+<li>Using Process Hacker 2 we can find all the activities happening in the system during malware detonation.</li>
+<li>Using Process hacker results we can see that 2 services were created i.e. :</li>
+<p>(a)<span class="cool-purple">mssecsvc2.0</span> ie Microsoft Security Center (2.0) Service </p>
+<p>(b)<span class="cool-green" > ochuttdlb605 </span> → This particular service re-encrypts any new file or even a USB if it's added</p>
+<br>
+<image src="wc image/Picture16.png" height="400" width="602"  class="center-image"></image>
+<br>
+<li>we could confirm the creation of these services: (simply search services in the Windows start menu search bar)</li>
+<br>
+<image src="wc image/Picture17.png" height="400" width="602"  class="center-image"></image>
+<br>
+<li>Now that I found 2 very important services, I was very curious about what they could possibly do.</li>
+<li>We could navigate to Windows services and simply double click the service we are interested in to view the properties.</li>
+<p><span class="cool-purple">(a) What mssecsvc2.0 does:</span></p>
+<li>It implements C:\Users\s.chisholm.mayorsec\Desktop\Ransomware.wannacry.exe -m security.</li>
+<li>It's not sure what it does presently but later I found that it implements the worm functionality of the malware (i.e. spreads the malware across the network, it spreads to another system in the network and gets automatically implemented there only if the system is vulnerable to <span style="color:
+    #00a2ed;text-shadow: 0 0 5px #00a2ed;">eternal blue </span>) using TCPview.</li>
+<br>
+<image src="wc image/Picture18.png" height="400" width="602"  class="center-image"></image>
+<br>
+<p><span class="cool-green">(b) What ochuttdlb605 service does: </span>
+<li>This service implements cmd.exe /c "C:\ProgramData\ochuttdlb605\tasksche.exe"</li>
+<li>We already know <span style="color:#ffd300  ;text-shadow: 0 0 5px #ffd300 ;">tasksche.exe </span>  takes care of the encryption routine and maybe this service is for persistence i.e. even if we add new files to our computer, it might get encrypted. (New files get encrypted because ochuttdlb605 service runs <span style="color:#ffd300  ;text-shadow: 0 0 5px #ffd300 ;">tasksche.exe </span> which again encrypts the files)</li>
+    <br>
+    <image src="wc image/Picture19.png" height="400" width="602"  class="center-image"></image>
+    <br>
+    <p id="sub-title2"><span style="color:magneta ;text-shadow: 0 0 5px magenta;"> (iii) Checking for Network Based Indicators using TCPview: (without connecting to the internet)</span></p>
+    <li>We could see that <span class="cool-purple">mssecsvc2.0</span>  runs C:\Users\s.chisholm.mayorsec\Desktop\Ransomware.wannacry.exe -m security on the port 445 of the other hosts in the network. (Not sure what it exactly does but I guess its checking if other hosts in the network are vulnerable to <span style="color:
+        #00a2ed;text-shadow: 0 0 5px #00a2ed;"> eternal blue</span> and might proceed to infect the other hosts if they are vulnerable)</li>
+    <br>
+    <image src="wc image/Picture20.png" height="300" width="1200"  class="center-image"></image>
+    <br>
+    <li>Th picture below shows that not only local network hosts are affected but some public IP's are also scanned:</li>
+    <br>
+    <image src="wc image/Picture21.png" height="400" width="602"  class="center-image"></image>
+    <br>
+    <li> <span style="color:#ff2a6d;text-shadow: 0 0 5px #ff2a6d;">taskshsvc.exe </span> opens up port 9050 and waits for a remote connection: (This probably is used to connect to the malware owner's C2 server to receive the decryption key)</li>
+    <li>Later in our analysis again using process hacker 2 we can confirm that we were indeed right and this listener which gets started at 127.0.0.1:9050 by <span style="color:#ff2a6d;text-shadow: 0 0 5px #ff2a6d;">taskshsvc.exe </span> is used to receive the decryption key as it gets triggered when we run @WanDecryptor@.exe</li>
+    <br>
+    <image src="wc image/Picture22.png" height="300" width="1000"  class="center-image"></image>
+    <br>
+<li>The following is the image of process hacker 2 and this run as we detonate the malware (without connecting to the internet) later run @WanDecryptor@.exe : (we could clearly see how @WanDecryptor@.exe runs <span style="color:#ff2a6d;text-shadow: 0 0 5px #ff2a6d;">taskshsvc.exe </span>) </li>
+    <br>
+    <image src="wc image/Picture23.png" height="300" width="1000"  class="center-image"></image>
+    <br>
+    <p id="sub-title2"><span style="color:magneta ;text-shadow: 0 0 5px magenta;"> (iv) Checking for Startup processes after detonation: (without connecting to the internet)</span></p>
+    <li>I utilized Windows task manager to check if any process is added to the startup post detonation</li>
+    <li>I found that  <span style="color:#ffd300  ;text-shadow: 0 0 5px #ffd300 ;">tasksche.exe </span> is added to the startup processes post detonation. This means that whenever the computer boots up this process runs automatically itself. This means any new file added will also be encrypted. (<span style="color:red  ;text-shadow: 0 0 5px red ;">Persistence</span>) </li>
+    <li>In the below image we can see that <span style="color:#ffd300  ;text-shadow: 0 0 5px #ffd300 ;">tasksche.exe </span> is added to the startup process (I took this screenshot of task manager post detonation and restarting the infected machine):</li>
+    <br>
+    <image src="wc image/Picture28.png" height="300" width="500"  class="center-image"></image>
+    <br>
+
+
+    <p id="sub-title2"><span style="color:magneta ;text-shadow: 0 0 5px magenta;"> (v) Running Process monitor during detonation to analyze the process tree: (without connecting to the internet)</span></p>
+    <li>Process tree helps us to mainly find the order of the events taking place as the malware detonates and this is the most important phase of our analysis.</li>
+    <li>After our basic static and dynamic analysis, its clear what each executable does and what events took place in the network as well as the host. Now process tree will help us arrange these events in an order and this will help us to create a flow chart for the malware.</li>
+    <li>The below image shows how as we launch wannacry ransomware executable, <span style="color:#ffd300  ;text-shadow: 0 0 5px #ffd300 ;">tasksche.exe </span> is run and does everything else: (process tree image from Process Hacker 2)</li>
+
+
+    <br>
+    <image src="wc image/Picture25.png" height="300" width="1000"  class="center-image"></image>
+    <br>
+    <li>The below image shows the order of the processes:</li>
+    <p>1. Firstly two services are created i.e. <span class="cool-purple">mssecsvc2.0 </span> and <span class="cool-green" > ochuttdlb605</span>. Then both the services are run.</p>
+<p>2. <span style="color:#ffd300  ;text-shadow: 0 0 5px #ffd300 ;">tasksche.exe </span> runs (due to the<span class="cool-green" > ochuttdlb605</span> service) and it creates the hidden directory  ochuttdlb605 in C:\ProgramData where  all the executables necessary for the malware is unpacked. (the encryption routine begins and files begin to get encrypted)</p>
+<p>3. attrib +h makes the current directory i.e. C:\ProgramData\ochuttdlb605 hidden</p>
+<p>4. icacls . /grant Everyone:F /T /C /Q => Givens Full permission/control to everyone for the current directory i.e. C:\ProgramData\ochuttdlb605</p>
+<p>5. After the files are continuosly AES encrypted they are stored in the original file location with WNCRY extension and original file name. <span style="color:aquamarine ;text-shadow: 0 0 5px aquamarine ;">taskdl.exe </span>is used delete the original encrypted file created once its copied to original file location. (It is periodically run several times)</p> 
+<p>6. cmd.exe /c vssadmin delete shadows /all /quiet & wmic shadowcopy delete & bcdedit /set {default} bootstatuspolicy ignoreallfailures & bcdedit /set {default} recoveryenabled no & wbadmin delete catalog -quiet => This command utilizes vssadmin (Volume Shadow Copies-vss) to delete shadow copies of all the files and folders. It also uses wbadmin (Windows Backup-wb) and deletes all the backup catlogs which contain the information of backups in Windows backup.</p>
+<p>7. cmd.exe /c reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run /v "ochuttdlb605" /t REG_SZ /d "\"C:\ProgramData\ochuttdlb605\tasksche.exe\""  /f => Creates a service called ochuttdlb605 which runs <span style="color:orange  ;text-shadow: 0 0 5px orange ;">tasksche.exe </span> everytime a user logs in (<span style="color:red  ;text-shadow: 0 0 5px red ;">Persistence</span>) .</p>
+   <p> 7. reg  add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run /v "ochuttdlb605" /t REG_SZ /d "\"C:\ProgramData\ochuttdlb605\tasksche.exe\"" /f => This command adds a registry entry named "ochuttdlb605" to the Windows Registry's "Run" key, specifying a program located at "C:\ProgramData\ochuttdlb605\tasksche.exe" to run at startup. The Run key makes the program run every time the user logs on (<span style="color:red  ;text-shadow: 0 0 5px red ;">Persistence</span>). </p>
+   <p>8. @WanaDecryptor@.exe launches taskhsvc.exe (a.k.a tor.exe) which starts to listen in local port 9050 for remote connections (especially for communication with C2 server)</p>
+   <p>⚠️ The following picture shows the process tree containing the order of the executables execution and command execution:⚠️</p>
+    <br>
+    <image src="wc image/Picture26.png" height="800" width="1200"  class="center-image"></image>*
+    <br>
+    <br>
+    <image src="wc image/Picture27.png" height="200" width="1000"  class="center-image"></image>
+    <br>
+    <br>
+    <br>
+    <div class="neon-line"></div>
+
+    <p id="sub-title">
+    3. The KillSwitch:<span style="color:magenta ;text-shadow: 0 0 5px magenta ;">☠️</span></p>
+    <li>This portion deserves a separate section by itself. Ironically KillSwitch is my username as well 😉.</li>
+    <li>This section is a part of the basic dynamic analysis as well. The only thing we will be doing differently is that we will detonate the malware with Inetsim (Internet Stimulator) running. Inetsim is used to stimulate the internet so basically whenever we make a http request to any website, inetsim provides the response which will be its default inetsim page.</li>
+    <li> Although we ran the malware as administrator, it doesn't get implemented as it to.</li>
+<li>This means that if the machine is connected to the inetsim /internet , the malware doesn't get implemented.</li>
+<li> This URL is basically the killswitch of this malware.</li>
+<li>Malware Tech aka  Marcus Hutchins randomly registered the domain the malware called back to and this domain was the killswitch. So now since the domain was registered by him, the malware can call back the domain unlike before when it was non-existent and hence it will not get implemented unless the domain exists. </li> 
+<li>You can Marcus Hutchins blog by clicking <a href="https://www.malwaretech.com/2017/05/how-to-accidentally-stop-a-global-cyber-attacks.html"_blank" class="here-link">here.</a></li>
+<li>The following screenshot is taken from wrieshark running remnux vm which is also running inetsim and is present in the same network as our test Windows machine in which we detonate the malware: (http GET request is sent by the victim machine to the URL  hxxp[://]www[.]iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea[.]com/)</li>
+<br>
+<image src="wc image/Picture29.png" height="500" width="800"  class="center-image"></image>
+<br>
+<li>We could see that in Process Monitor's process tree too that Ransomeware.wannacry.exe got executed but nothing further happened:</li>
+
+<br>
+<image src="wc image/Picture30.png" height="500" width="700"  class="center-image"></image>
+
+
+<br>
+<br>
+<br>
+<div class="neon-line"></div>
+<p id="sub-title">
+    4. Detailed Analysis of each of the files present in C:\ProgramData\ochuttdlb605:<span style="color:magenta ;text-shadow: 0 0 5px magenta ;">🔎</span></p>
+   <li>NOTE: All the executables were analyzed using PEstudio.</li>
+    <li>We could all the files present in C:\ProgramData\ochuttdlb605:</li>
+    <p>[⚠️A DETAILED ANALYSIS OF EACH OF THE FILES PRESENT HERE IS GIVEN IN SECTION 4⚠️]</p>
+
+    <image src="wc image/Picture14.png" height="400" width="602"  class="center-image"></image>
+    <p id="sub-title2"><span style="color:magneta ;text-shadow: 0 0 5px magenta;">(i) msg folder:</p></span>
+    <li>We can see the same file but in various languages : (Probably the ransom note)</li>
+    <image src="wc image/Picture31.png" height="500" width="702"  class="center-image"></image>
+    <br>
+    <li>We can confirm that its for the ransom note: (English ransom note)</li>
+    <br>
+    <image src="wc image/Picture32.png" height="300" width="802"  class="center-image"></image>
+    <p id="sub-title2"><span style="color:magneta ;text-shadow: 0 0 5px magenta;">(ii) taskdl.exe:</span></p>
+    <li>we could see that it uses API like DeleteFileW for the cleanup process:</li>
+    <li>As we previously saw taskl.exe is used for cleanup process.</li>
+    <br>
+    <image src="wc image/Picture33.png" height="300" width="802"  class="center-image"></image>
+    <br>
+    <p id="sub-title2"><span style="color:magneta ;text-shadow: 0 0 5px magenta;">(iii)taskse.exe:</span></p>
+    <li>Its not clear on what taskse.exe does.</lir
+    <br>
+    <image src="wc image/Picture35.png" height="400" width="802"  class="center-image"></image>
+    <br>
+    <p id="sub-title2"><span style="color:magneta ;text-shadow: 0 0 5px magenta;">(iii)tasksche.exe:</span></p>
+    <li>We already know what tasksche.exe does but a new we learn now is that its original name is diskpart.exe.</li>
+    <br>
+    <image src="wc image/Picture34.png" height="400" width="802"  class="center-image"></image>
+    <br>
+    <li>Another major thing to note is that when I detonated malware and checked the startup folder using task manager, I found diskpart.exe but thought it was some legitimate Windows process but seems like it was actually tasksche.exe. </li>
+    <li>Well, I got tricked lol.🥴</li>
+    <br>
+    <image src="wc image/Picture36.png" height="400" width="802"  class="center-image"></image>
+    <br>
+    <p id="sub-title2"><span style="color:magneta ;text-shadow: 0 0 5px magenta;">(iv)c.wnry: (Also details about tor.exe and taskshsvc which are present in C:\ProgramData\ochuttdlb605\TaskData\Tor)</span></p>
+    <li>when we analyze c.wnry using PEstudio although its not an executable, we can see some important strings:</li>
+    <br>
+    <image src="wc image/Picture37.png" height="400" width="802"  class="center-image"></image>
+    <br>
+    <li>hxxps[://]dist[.]torproject[.]org/torbrowser/6[.]5[.]1/tor-win32-0[.]2[.]9[.]10[.]zip is the URL for downloading the tor browser (it doesn't work now):</li>
+    <br>
+    <image src="wc image/Picture38.png" height="300" width="1000"  class="center-image"></image>
+    <br>
+    <p>
+    List of c2 servers:
+<li> gx7ekbenv2riucmf.onion</li>
+<li> 57g7spgrzlojinas.onion</li>
+<li> xxlvbrloxvriy2c5.onion</li>
+<li> 76jdd2ir2embyv47.onion</li>
+<li> cwwnhwhlz52maqm7.onion </li>
+</p>
+<br>
+<li>13AM4VW2dhxYgXeQepoHkHSQuy6NgaEb94 --> Bitcoin wallet address</li>
+<p>There was some cool information I found about the gx7ekbenv2riucmf.onion site: (I guess it might be false anyway)</p>
+<br>
+    <image src="wc image/Picture40.png" height="400" width="802"  class="center-image"></image>
+    <br>
+    <li>Another discovery is that tor.exe is renamed to taskshsvc.exe ( I confirmed this because the API's in both executables matched 100 percent) and the below screenshot is of taskshsvc.exe which is similar to tor.exe:</li>
+      <li><span style="color:red  ;text-shadow: 0 0 5px red ;">NOTE: The main takeaway for us here is that taskhsvc.exe is actually tor.exe which is renamed and this opens up the port 9050 in the machine locally (127.0.0.1) and starts listening and might connect to one of the C2 servers (onion sites) present in c.wncry using the tor browser which is installed from hxxps[://]dist[.]torproject[.]org/torbrowser/6[.]5[.]1/tor-win32-0[.]2[.]9[.]10[.]zip </span></li>
+    <br>
+    <image src="wc image/Picture41.png" height="400" width="802"  class="center-image"></image>
+    <br>
+    <li>Both tor.exe and taskshsvc.exe (tor.exe is copied and renamed as taskshsvc.exe) are same files and present in C:\ProgramData\ochuttdlb605\TaskData\Tor:</li>
+    <br>
+    <image src="wc image/Picture42.png" height="400" width="802"  class="center-image"></image>
+    <br>
+    <p id="sub-title2"><span style="color:magneta ;text-shadow: 0 0 5px magenta;">(v)b.wnry:</span></p>
+<li>The first byte BM6 indicates that its an image (with .bmp extension):</li>
+<br>
+<image src="wc image/Picture43.png" height="400" width="802"  class="center-image"></image>
+<br>
+<li>There is bmp image in Desktop and b.wnry could actually be @WanaDecryptor@.bmp:</li>
+<br>
+<image src="wc image/Picture44.png" height="500" width="702"  class="center-image"></image>
+<br>
+<p id="sub-title2"><span style="color:magneta ;text-shadow: 0 0 5px magenta;">(vi)r.wnry:</span></p>
+<li>r.wnry contains the ransom note:</li>
+<image src="wc image/Picture45.png" height="300" width="1200"  class="center-image"></image>
+<br>
+<li>The ransom note we find on the Desktop is actually r.wnry: (@Please_Read_Me@.txt)</li>
+<br>
+<image src="wc image/Picture46.png" height="300" width="802"  class="center-image"></image>
+<br>
+<p id="sub-title2"><span style="color:magneta ;text-shadow: 0 0 5px magenta;">(vii)u.wnry: (Which is actually  @wanaDecryptor@.exe)</span></p>
+<br>
+<li>This is an executable and it is probably @wanaDecryptor@.exe as both have the following strings:</li>
+<br>
+<image src="wc image/Picture47.png" height="600" width="1200"  class="center-image"></image>
+<br>
+<li>We could confirm our theory that both @wanaDecryptor@.exe and u.wnry have the same original name i.e. LODCTR.EXE:</li>
+<br>
+<image src="wc image/Picture48.png" height="300" width="700"  class="center-image"></image>
+<br>
+<p id="sub-title2"><span style="color:magneta ;text-shadow: 0 0 5px magenta;">(viii)t.wnry:</span></p>
+<li>Not much is known about t.wnry:</li>
+<br>
+<image src="wc image/Picture49.png" height="300" width="700"  class="center-image"></image>
+<br>
+<p id="sub-title2"><span style="color:magneta ;text-shadow: 0 0 5px magenta;">(ix)s.wnry: </span></p>
+<li>Its a zipped file since it has PK as its first byte but other than that there not much information:</li>
+<br>
+<image src="wc image/Picture50.png" height="300" width="700"  class="center-image"></image>
+<br>
+<p id="sub-title2"><span style="color:magneta ;text-shadow: 0 0 5px magenta;">(ix) Other Files:</span></p>
+<li>00000000.pky , 00000000.eky → Both are encrypted RSA keys (I know this from PEstudio results which show RSA1 as the first byte)</li>
+<li>  00000000.res → Not sure what it does</li>
+<li><span style="color:#eeeeee;text-shadow: 0 0 5px #eeeeee;">✔️ There ironical thing about all these file is that b.wnry is actually bmp image and its starts with the same letter as its original file. c.wnry contains the C2 communication information.✔️ </li></span>
+<br>
+  <br>
+  <br>
+  <div class="neon-line"></div>
+<p id="sub-title"> 5. Analysing the decryption function:<span style="color:magenta ;text-shadow: 0 0 5px magenta ;">🔓</span></p>
+<li>@wanaDecryptor@.exe has the decryption functionality:</li>
+<image src="wc image/Picture51.png" height="500" width="700"  class="center-image"></image>
+<br>
+<li>When we click it, it randomly decrypts certain files:</li>
+<br>
+<image src="wc image/Picture52.png" height="400" width="800"  class="center-image"></image>
+<br>
+<li>When we click the check payment button : (we are not connected to the internet and hence we get this message)</li>
+<br>
+<image src="wc image/Picture53.png" height="400" width="500"  class="center-image"></image>
+<br>
+<li>Furthermore, I checked the bitcoin address to which bitcoins and this a screen shot of it: (13AM4VW2dhxYgXeQepoHkHSQuy6NgaEb94)</li>
+<br>
+<image src="wc image/Picture64.png" height="600" width="1000"  class="center-image"></image>
+<br>
+<li>In Process monitor's process tree we can see that @wanaDecryptor@.exe launches taskhsvc.exe (a.k.a. tor.exe which is used connect to the C2 server):</li>
+<br>
+<image src="wc image/Picture66.png" height="300" width="600"  class="center-image"></image>
+<br>
+<li>In TCPview we can taskhsvc listens in port 9050 for connection from C2 server probably:</li>
+<br>
+<image src="wc image/Picture68.png" height="300" width="1000"  class="center-image"></image>
+<br>
+  <br>
+  <br>
+  <div class="neon-line"></div>
+  <p id="sub-title"> 5. Advanced Static Analysis:<span style="color:magenta ;text-shadow: 0 0 5px magenta ;">🧠</span></p>
+  <li>We will be using a tool called cutter for this</li>
+  <li>The below picture is the overall graphical view of the malware's main function:</li>
+  <br>
+<image src="wc image/Picture55.png" height="900" width="700"  class="center-image"></image>
+<br
+<p>clear explaination of the killswitch:</p>
+<li> hxxp[://]www[.]iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea[.]com/)→ This URL is stored in ESI register which is the killswitch domain</li>
+<li>Using InternetOpenUrlA API a http/https request is sent to the above url which is stored in the ESI register (we could also see the API takes the url as one of its parmater)</li>
+<li>Now the result of InternetOpenUrlA is stored in EAX register and the value in eax register is stored in EDI register (the result of InternetOpenUrlA is either 1 or 0, 1 if it can reach the URL and 0 if it can't)</li>
+<li>Now if edi is 1 → test edi edi will return a value 1 and hence ZE=0 (URL is reachable)</li>
+<li>if edi is 0 → test edi edi will return a value 0 and hence ZE=1 (URL is unreachable)</li>
+<li>jne 0x4081bc → jumps if ZE=0 ie if the zero flag is not set  (URL is reachable)</li>
+<br>
+<image src="wc image/Picture56.png" height="500" width="1000"  class="center-image"></image>
+<br>
+<li>url is reachable → jump is taken to 0x4081bc and  nothing much happens</li>
+<li>url is not reachable → same thing happens but a function is called and this particular function takes care of entire encryption routine</li>
+<br>
+<image src="wc image/Picture57.png" height="300" width="500"  class="center-image"></image>
+<br>
+<br>
+  <br>
+  <div class="neon-line"></div>
+  <p id="sub-title"> 6. Advanced Dynamic Analysis:(Connected to the Internet)<span style="color:magenta ;text-shadow: 0 0 5px magenta ;">💣🎆 </span></p>
+  <li>For this portion. we will be using a tool called x33Dbg.exe.</li>
+  <li>Dynamic analysis using a debugger will help us break the killswitch and implement the malware without killing it.</li>
+  <li>There are some malware which literally delete themselves if they are in a debugger or simply when not connected to the internet. Debugger is handy in these situations and will help us understand what the malware actually does at the network and system level.</li>
+  <li>Here we are using a debugger while connected to the internet/inetsim. The malware won't implement as it calls back to its killswitch domain (hxxp[://]www[.]iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea[.]com/), but we can implement malware even this situation by simply changing a zero flag.</li>
+
+  <li>First we press f9 once and we enter the into entry point:</li>
+  <br>
+<image src="wc image/Picuture58.png" height="500" width="1200"  class="center-image"></image>
+<br>
+<li>We utilize string references (right click and search for this) and search for the URL hxxp[://]www[.]iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea[.]com/ and we also set a break point here:</li>
+<br>
+<image src="wc image/Picture59.png" height="500" width="1200"  class="center-image"></image>
+<br>
+<li> Click restart and press f9 twice until you reach the breakpoint. After reaching the breakpoint press f8 until the test edi edi instruction and then we reach jne instruction , ZE=0 since we are connected to the internet and call back is made to the killswitch domain (hxxp[://]www[.]iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea[.]com/) and if we click f8 again the malware won't be implemented as the jump will be taken. But now we can alter ZE flag (right side) to 1 by simply clicking it and now jump won't taken and the malware got implemented:  </li>
+<br>
+<image src="wc image/Picture60.png" height="500" width="1250"  class="center-image"></image>
+<br>
+<li>The malware got implemented after altering ZE=1 and pressing f8:</li>
+<br>
+<image src="wc image/Picture61.png" height="500" width="900"  class="center-image"></image>
+<br>
+<br>
+  <br>
+  <div class="neon-line"></div>
+  <p id="sub-title"> 7. Encryption Routine of the Malware:<span style="color:magenta ;text-shadow: 0 0 5px magenta ;">🔒🔑🔓🔐 </span></p>
+  <li> I didn't reverse engineer the encryption portion myself, might do it in the upcoming blogs. Anyway I was curious how the encryption worked and referred to many blogs and videos. </li>
+  <li>Overview picture of the encryption routine:</li>
+  <br>
+  <image src="wc image/Picture63.png" height="400" width="600"  class="center-image"></image>
+  <br>
+<li>RSA 2048 ( Asymmetric encryption) and AES-128 (Symmetric Encryption is used) are the cryptographic algorithms used in wannacry ransomware.</li>
+<li>To be very simple, in asymmetric encryption like RSA, 2 keys are generated, one  key i.e. the public key is used for encryption (locking) and the private key is used for decryption (unlocking).</li>
+<li>While in symmetric encryption like AES, the same key is used for encryption and decryption (like a typical key for a lock i.e. same key is used for locking and unlocking).</li>
+<li>So basically here the client/victim generate their own RSA key pairs.</li>
+<li>The hacker embeds his RSA public key with the malware.</li>
+<li>Now as the malware gets implemented, all the files are AES encrypted. There will be a large number of AES keys. Since in the AES algorithm, the same AES key is used for decryption, it needs to be hidden so the victim can't decrypt the files.</li>
+<li>Instead of hiding, its encrypted using the client's RSA public key. (📕remember that the public key is used for encryption only and the private key is used for decryption only and they come in pairs📕)</li>
+<li> Now still the client/victim can decrypt the client's RSA public key encrypted AES keys using the client's RSA private key. Now we need to hide this RSA private key.</li>
+<li>Once again instead of hiding , the client's RSA private key is encrypted using hacker's RSA public key which comes embedded with the malware.</li>
+<li>So now inorder to decrypt the file, we need AES key for each file. To obtain the AES keys we need the client's RSA private key as the AES keys are encrypted with the client's RSA public key. Since client's RSA private key is also encrypted using hacker's RSA public key which comes embedded with the malware, we need hacker's RSA private key to decrypt it. So we just need hacker's RSA private to recover all the files.</li>
+<li> This key comes at a price and we need to pay a ransom (300$) in bitcoin.</li>
+<li>The picture above shows a very simple overview of this entire process.</li>
+<br>
+<br>
+<br>
+<div class="neon-line"></div>
+<p id="sub-title"> 8. YARA rule:<span style="color:magenta ;text-shadow: 0 0 5px magenta ;">📝</span</p>
+   
+    <li>We will be using YARA(Yet Another Ridiculous Acronym) to identify wanancry ransomware using certain string pattern:</li>
+
+    <div class="code-block">
+
+      
+        <code>
+            <pre>
+                rule Wannacry_Ransomware {
+                    meta: 
+                        last_updated = "2023-09-09"
+                        author = "killswitch"
+                        description = "A sample Yara rule for Wannacry Ransomware"
+                        Hash = "6C382A1C16DBA41B4FF6F0D728E9E92AEBFE2EE0C7FEB30A0E63B15EAF6C4B44"
+                
+                    strings:
+                        $PE_magic_byte = "MZ"
+                        $string1 = "http://www.iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea.com"
+                        $string2="tasksche.exe"
+                        $string3="wnry"
+                        $string4 = "\\\\%s\\IPC$" 
+                     
+                        
+                    condition:
+                        $PE_magic_byte at 0 and $string1 and $string2 and $string3 and $string4
+                }
+        </pre>
+        </code>
+    </div>
+
+<li>Output Result for our yara rule:</li>
+<image src="wc image/Picture65.png" height="300" width="800"  class="center-image"></image>
+<br>
+<br>
+<br>
+
+    <div class="neon-line"></div>
+    <p id="sub-title"> 8. Report:<span style="color:magenta ;text-shadow: 0 0 5px magenta ;">✏️📕</span</p>
+<li>Creating a proper report is like the most crucial phase of an malware analysis</li>
+<li>Readers of my blog who came this far can checkout my report <a href=https://github.com/killswitchp/Analysis-of-Wannacry-Ransomware/blob/main/PMAT%20report.pdf class="here-link">here.</a></li>
+<br>
+<div class="neon-line"></div>
+
+</div>
+<script src="js/codeblock.js"></script>
+</body>
+</html>
+
+

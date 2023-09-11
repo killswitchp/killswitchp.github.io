@@ -15,7 +15,7 @@ if (window.innerWidth < 480) {
 }
 const commands = {
   whoami: "Shows your username",
-  id: "Another way telling who you are",
+  id: "Another way telling of who you are",
   about: "Voluntary personal information disclosure?!",
   social: "Display social networks",
   banner: "Displays the banner(needs admin privilege)",
@@ -36,36 +36,11 @@ const commands = {
 
 const blogs = [
   { name: "Butterfly Effect", file: "blog1.html" },
-  { name: "Butterfly Effect", file: "pnpt.html" },
+  { name: "PNPT Review 2023", file: "pnpt.html" },
+  { name: "Wannacry Ransomware", file: "wanancry.html" }
 ];
 
 const pages = blogs.map((item) => item.file);
 
-const ads = [
-  [
-    "zoa/capy.gif",
-    "zoa/drink.gif",
-    "zoa/transform.gif",
-    "zoa/flying.gif",
-    "zoa/zoa.jpg",
-  ],
-  [
-    "prime/prime.gif",
-    "prime/logan-jump.gif",
-    "prime/logan-drink.gif",
-    "prime/ksi.gif",
-    "prime/ksi-yes.gif",
-  ],
-  [
-    "cupcake/cupcake.gif",
-    "cupcake/run.gif",
-    "cupcake/happycupcake.gif",
-    "cupcake/happy.gif",
-    "cupcake/cry.gif",
-  ],
-];
-
-let adTime;
-let gifTime;
 
 const secretMusic = new Audio("./assets/audio/goofy-ahh-2.mp3");

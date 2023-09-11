@@ -1,3 +1,40 @@
+
+const validColours = [
+  'red',
+  'blue',
+  'green',
+  'yellow',
+  'orange',
+  'purple',
+  'pink',
+  'brown',
+  'gray',
+  'black',
+  'white',
+  'cyan',
+  'magenta',
+  'lime',
+  'teal',
+  'navy',
+  'olive',
+  'maroon'
+];
+
+const ads = [
+  [
+    "ads/rat-pizza.gif",
+    "ads/rat-spin.gif",
+    "ads/rat.gif",
+    "ads/stifffy-uh.gif"
+  ]
+];
+
+let adTime;
+let gifTime;
+
+
+
+
 function executeCommand(userInput) {
   const [cmd, ...rest] = userInput.split(" ");
   const args = rest.join(" ");
@@ -72,7 +109,7 @@ function executeCommand(userInput) {
 
     case "cat":
       if (!pages.includes(args))
-        return `<p class=error>Blog does not exist, "ls" -- lists all blogs </p>`;
+        return `<p class=error>Blog does not exist, type "ls" to view all the blogs</p>`;
       window.open(args);
       return "<p>Loading................</p>";
 
@@ -84,10 +121,49 @@ function executeCommand(userInput) {
       getIpApi("out");
       return;
 
+  
+      
+ 
+
+    case "ad":
+      const adMusic = new Audio("./assets/audio/goofy-ahh-2.mp3");
+      adMusic.play();
+      adDOM.classList.remove("hidden");
+      let stopAds = false;
+      clearTimeout(adTime);
+      clearTimeout(gifTime);
+
+      adTime = setTimeout(() => {
+        adDOM.classList.add("hidden");
+        stopAds = true;
+        adMusic.pause();
+      }, 15000);
+
+      let count = 0;
+
+
+      function playAds() {
+
+        if (stopAds) return;
+        const adIndex = (count % 4) + 1; 
+        adDOM.innerHTML = `<img src="./ads/rat${adIndex}.gif" alt="ad" />`;
+        gifTime = setTimeout(() => {
+          count++;
+          playAds();
+        }, 3000);
+      }
+      
+      
+      playAds();
+
+      return;
+   
+      
+
       case "theme":
         if (!pages.includes(args)) {
           const colour = userInput.substring(6); // Extract the color value from the user input
-          if(colour){
+          if(validColours.includes(colour)){
           const styleElement = document.createElement('style');
           styleElement.innerHTML = `:root { --primary: ${colour}; }`;
           document.head.appendChild(styleElement);
@@ -99,8 +175,8 @@ else
 {
   return `<p class="success">No colour enterred.Sample input --> theme red</p>`
 }
+        
         }
-
         
         
     case "secret":
@@ -120,12 +196,15 @@ else
     window.open("blog1.html");
     return "<p>Loading................</p>";
   }
-
-  else if
-  (userInput == "cat pnpt.html") {
-    window.open("blog1.html");
+  else if (userInput == "cat pnpt.html") {
+    window.open("pnpt.html");
     return "<p>Loading................</p>";
   }
+  else if (userInput == "cat wannacry.html") {
+    window.open("wannacry.html");
+    return "<p>Loading................</p>";
+  }
+
 
   else{
 
@@ -182,3 +261,6 @@ editorBtn.addEventListener("click", () => {
 // window.addEventListener("beforeunload", function () {
 //   video.pause();
 // });
+
+// code block
+
