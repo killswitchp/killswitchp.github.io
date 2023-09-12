@@ -15,7 +15,7 @@ if (window.innerWidth < 480) {
 }
 const commands = {
   whoami: "Shows your username",
-  id: "Another way telling of who you are",
+  id: "Another way of telling who you are",
   about: "Voluntary personal information disclosure?!",
   social: "Display social networks",
   banner: "Displays the banner(needs admin privilege)",
@@ -28,16 +28,17 @@ const commands = {
   help: "You obviously already know what this does",
   email: "Do not email me",
   clear: "Clear terminal",
-  ls: "To the list of blogs",
+  ls: "To view the list of blogs",
   cat: "To read my blogs.eg: cat blog1.html",
   vi: "visual editor, stores file locally",
-  secret: "DON'T TRY TO VIEW MY SECRET"
+  secret: "DON'T TRY TO VIEW MY SECRET",
+  ad: "For monetization"
 };
 
 const blogs = [
   { name: "Butterfly Effect", file: "blog1.html" },
   { name: "PNPT Review 2023", file: "pnpt.html" },
-  { name: "Wannacry Ransomware", file: "wanancry.html" }
+  { name: "Wannacry Ransomware", file: "wannacry.html" }
 ];
 
 const pages = blogs.map((item) => item.file);

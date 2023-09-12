@@ -126,7 +126,7 @@ function executeCommand(userInput) {
  
 
     case "ad":
-      const adMusic = new Audio("./assets/audio/goofy-ahh-2.mp3");
+      const adMusic = new Audio("./assets/audio/pico.mp3");
       adMusic.play();
       adDOM.classList.remove("hidden");
       let stopAds = false;
