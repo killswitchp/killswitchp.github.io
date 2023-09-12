@@ -150,7 +150,7 @@
 </p>
 <p id="sub-title2"><span style="color:magneta ;text-shadow: 0 0 5px magenta;"> (i) Initial Detonation 💣 without connecting to the internet:</span></p>
 <li>The malware can be run with administrative🤠 privileges only.</li>
-<li>After detonating, firstly the files get encrypted and their extension gets changed to WNCRY. After that, an executable called @WanaDecryptor@.exe gets added to the desktop. Furthermore, a ransom note and also 2 images are added to the desktop. Finally, the desktop background image has been changed to the image that was previously added to the desktop, indicating that our files have been encrypted.</li>
+<li>After detonating, firstly the files get encrypted and their extension gets changed to WNCRY. After that, an executable called @WanaDecryptor@.exe gets added to the desktop. Furthermore, a ransom note and also 2 images (with .bmp extension) are added to the desktop. Finally, the desktop background image has been changed to the image that was previously added to the desktop, indicating that our files have been encrypted.</li>
 <li>Another important thing I noted here is that executable files are unaffected by this encryption. (This malware targets certain types of files like images, text files, zip files)</li>
 <li>Most of all we can confirm that this malware is <span style="color:green;text-shadow: 0 0 5px green;"> ransomware💸 </span> since it encrypts all the files and asks for ransom for decryption.</li>
 <image src="wc image/Picture9.png" height="400" width="602"  class="center-image"></image>
@@ -165,7 +165,7 @@
 <br>
 
 <p id="sub-title2"><span style="color:magneta ;text-shadow: 0 0 5px magenta;"> (ii) Checking for Network indicators using Procmon : (without connecting to the internet)</span></p>
-<li>We run process monitor while detonating the malware (without connecting to the internet). Process monitor captured all the events happening in the system while the malware gets detonated.</li>
+<li>We run process monitor while detonating the malware (without connecting to the internet). Process monitor captured all the events happening in the system while the malware got detonated.</li>
 <li>We could see a file being created in C:\Windows called <span style="color:#ffd300  ;text-shadow: 0 0 5px #ffd300 ;">tasksche.exe </span> which appears to have intentionally misspelled TaskSchd.exe</li>
 <br>
 <image src="wc image/Picture12.png" height="400" width="602"  class="center-image"></image>
@@ -181,7 +181,7 @@
 <br>
 <image src="wc image/Picture15.png" height="400" width="602"  class="center-image"></image>
 <br>
-<li>One thing we can confirm is that <span style="color:#ffd300  ;text-shadow: 0 0 5px #ffd300 ;">tasksche.exe </span> is one of the important executables and it basically creates the secret directory ochuttdlb605 which contains all other executables and encryption related keys and everything else related to the malware. This one of the first executables thats executed as we detonate the malware and this basically in turn does all the destructive stuffs (encrypting the files).</li>
+<li>One thing we can confirm is that <span style="color:#ffd300  ;text-shadow: 0 0 5px #ffd300 ;">tasksche.exe </span> is one of the important executables and it basically creates the secret directory ochuttdlb605 which contains all other executables and encryption related keys and everything else related to the malware. This is one of the first executables that gets executed as we detonate the malware and this basically in turn does all the destructive stuffs (encrypting the files).</li>
 <li>We can view various files here and each of these files has an important functionality: (the functionality of all these files will be discussed in depth in section 4)</li>
 <br>
 <image src="wc image/Picture14.png" height="400" width="602"  class="center-image"></image>
@@ -204,8 +204,8 @@
 <li>We could navigate to Windows services and simply double click the service we are interested in to view the properties.</li>
 <p><span class="cool-purple">(a) What mssecsvc2.0 does:</span></p>
 <li>It implements C:\Users\s.chisholm.mayorsec\Desktop\Ransomware.wannacry.exe -m security.</li>
-<li>It's not sure what it does presently but later I found that it implements the worm functionality of the malware (i.e. spreads the malware across the network, it spreads to another system in the network and gets automatically implemented there only if the system is vulnerable to <span style="color:
-    #00a2ed;text-shadow: 0 0 5px #00a2ed;">eternal blue </span>) using TCPview.</li>
+<li>It's not sure what it does presently but later I found that it implements the worm functionality of the malware using TCPview.( Worm🐛functionality - Checks if the other systems in the local network are vulnerable to <span style="color:
+    #00a2ed;text-shadow: 0 0 5px #00a2ed;">eternal blue </span> and infects automatically without any user interaction if vulnerable) </li>
 <br>
 <image src="wc image/Picture18.png" height="400" width="602"  class="center-image"></image>
 <br>
@@ -221,7 +221,7 @@
     <br>
     <image src="wc image/Picture20.png" height="300" width="1200"  class="center-image"></image>
     <br>
-    <li>Th picture below shows that not only local network hosts are affected but some public IP's are also scanned:</li>
+    <li>The picture below shows that not only local network hosts are affected but some public IP's are also scanned:</li>
     <br>
     <image src="wc image/Picture21.png" height="400" width="602"  class="center-image"></image>
     <br>
@@ -230,7 +230,7 @@
     <br>
     <image src="wc image/Picture22.png" height="300" width="1000"  class="center-image"></image>
     <br>
-<li>The following is the image of process hacker 2 and this run as we detonate the malware (without connecting to the internet) later run @WanDecryptor@.exe : (we could clearly see how @WanDecryptor@.exe runs <span style="color:#ff2a6d;text-shadow: 0 0 5px #ff2a6d;">taskshsvc.exe </span>) </li>
+<li>The following is the image of process hacker 2 and its run as we detonate the malware (without connecting to the internet) later run @WanDecryptor@.exe : (we could clearly see how @WanDecryptor@.exe runs <span style="color:#ff2a6d;text-shadow: 0 0 5px #ff2a6d;">taskshsvc.exe </span>) </li>
     <br>
     <image src="wc image/Picture23.png" height="300" width="1000"  class="center-image"></image>
     <br>
@@ -277,10 +277,10 @@
     3. The KillSwitch:<span style="color:magenta ;text-shadow: 0 0 5px magenta ;">☠️</span></p>
     <li>This portion deserves a separate section by itself. Ironically KillSwitch is my username as well 😉.</li>
     <li>This section is a part of the basic dynamic analysis as well. The only thing we will be doing differently is that we will detonate the malware with Inetsim (Internet Stimulator) running. Inetsim is used to stimulate the internet so basically whenever we make a http request to any website, inetsim provides the response which will be its default inetsim page.</li>
-    <li> Although we ran the malware as administrator, it doesn't get implemented as it to.</li>
+    <li> Although we ran the malware as administrator, it doesn't get implemented as it used to.</li>
 <li>This means that if the machine is connected to the inetsim /internet , the malware doesn't get implemented.</li>
 <li> This URL is basically the killswitch of this malware.</li>
-<li>Malware Tech aka  Marcus Hutchins randomly registered the domain the malware called back to and this domain was the killswitch. So now since the domain was registered by him, the malware can call back the domain unlike before when it was non-existent and hence it will not get implemented unless the domain exists. </li> 
+<li><span style="color:red ;text-shadow: 0 0 5px red ;">Malware Tech aka  Marcus Hutchins</span> randomly registered the domain, the malware called back to and this domain was the killswitch. So now since the domain was registered by him, the malware can call back to the domain unlike before when it was non-existent and hence it will not get implemented unless the domain exists. </li> 
 <li>You can Marcus Hutchins blog by clicking <a href="https://www.malwaretech.com/2017/05/how-to-accidentally-stop-a-global-cyber-attacks.html"_blank" class="here-link">here.</a></li>
 <li>The following screenshot is taken from wrieshark running remnux vm which is also running inetsim and is present in the same network as our test Windows machine in which we detonate the malware: (http GET request is sent by the victim machine to the URL  hxxp[://]www[.]iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea[.]com/)</li>
 <br>
@@ -299,8 +299,8 @@
 <p id="sub-title">
     4. Detailed Analysis of each of the files present in C:\ProgramData\ochuttdlb605:<span style="color:magenta ;text-shadow: 0 0 5px magenta ;">🔎</span></p>
    <li>NOTE: All the executables were analyzed using PEstudio.</li>
-    <li>We could all the files present in C:\ProgramData\ochuttdlb605:</li>
-    <p>[⚠️A DETAILED ANALYSIS OF EACH OF THE FILES PRESENT HERE IS GIVEN IN SECTION 4⚠️]</p>
+    <li>All the files present in C:\ProgramData\ochuttdlb605:</li>
+    <p>[⚠️A DETAILED ANALYSIS OF EACH OF THE FILES PRESENT HERE i.e. GIVEN IN SECTION 4⚠️]</p>
 
     <image src="wc image/Picture14.png" height="400" width="602"  class="center-image"></image>
     <p id="sub-title2"><span style="color:magneta ;text-shadow: 0 0 5px magenta;">(i) msg folder:</p></span>
@@ -322,7 +322,7 @@
     <image src="wc image/Picture35.png" height="400" width="802"  class="center-image"></image>
     <br>
     <p id="sub-title2"><span style="color:magneta ;text-shadow: 0 0 5px magenta;">(iii)tasksche.exe:</span></p>
-    <li>We already know what tasksche.exe does but a new we learn now is that its original name is diskpart.exe.</li>
+    <li>We already know what tasksche.exe does but a new thing we learn now is that its original name is diskpart.exe.</li>
     <br>
     <image src="wc image/Picture34.png" height="400" width="802"  class="center-image"></image>
     <br>
@@ -443,8 +443,8 @@
 <br
 <p>clear explaination of the killswitch:</p>
 <li> hxxp[://]www[.]iuqerfsodp9ifjaposdfjhgosurijfaewrwergwea[.]com/)→ This URL is stored in ESI register which is the killswitch domain</li>
-<li>Using InternetOpenUrlA API a http/https request is sent to the above url which is stored in the ESI register (we could also see the API takes the url as one of its parmater)</li>
-<li>Now the result of InternetOpenUrlA is stored in EAX register and the value in eax register is stored in EDI register (the result of InternetOpenUrlA is either 1 or 0, 1 if it can reach the URL and 0 if it can't)</li>
+<li>Using InternetOpenUrlA API a http/https request is sent to the above URL which is stored in the ESI register (InternetOpenUrlA API takes the URL as one of its parmater)</li>
+<li>Now the result of InternetOpenUrlA is stored in EAX register and the value in EAX register is stored in EDI register (the result of InternetOpenUrlA is either 1 or 0, 1 if it can reach the URL and 0 if it can't)</li>
 <li>Now if edi is 1 → test edi edi will return a value 1 and hence ZE=0 (URL is reachable)</li>
 <li>if edi is 0 → test edi edi will return a value 0 and hence ZE=1 (URL is unreachable)</li>
 <li>jne 0x4081bc → jumps if ZE=0 ie if the zero flag is not set  (URL is reachable)</li>
