@@ -1,8 +1,4 @@
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
+
 
 :root {
   --primary: #3d43b4;
@@ -414,10 +410,5 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #525252;
-}
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
 }
 
