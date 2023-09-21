@@ -38,7 +38,8 @@ const commands = {
 const blogs = [
   { name: "Butterfly Effect", file: "blog1.html" },
   { name: "PNPT Review 2023", file: "pnpt.html" },
-  { name: "Wannacry Ransomware", file: "wannacry.html" }
+  { name: "Wannacry Ransomware", file: "wannacry.html" },
+  { name: "Tumbaad", file: "blog2.html" }
 ];
 
 const pages = blogs.map((item) => item.file);

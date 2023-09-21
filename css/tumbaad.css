@@ -1,0 +1,323 @@
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:black; 
+    
+    
+  }
+
+  .container {
+    
+    max-width: 1000px;
+    padding: 20px;
+   
+  }
+
+
+p,li,ul {
+  font-weight: normal;
+    color:      #eeeeee;  
+  
+    font-size: 22px;
+    line-height: 1.5;
+    
+}
+
+
+#title
+{
+font-size:40px;
+font-weight: 1000;
+color:red;
+
+
+display: flex;
+  
+
+}
+
+
+#sub-title
+{
+font-size:30px;
+font-weight: 1000;
+color:red;
+}
+
+#sub-title2
+{
+font-size:23px;
+
+}
+
+
+.center-image {
+    text-align:center;
+    display: flex;
+  justify-content: center;
+  
+ 
+  box-shadow: 0 0 20px red;
+  box-shadow: 0 0 .2rem red,
+  
+
+
+    
+  }
+
+  .center-image2 {
+    text-align:center;
+    display: flex;
+  justify-content: center;
+
+  box-shadow: 0 0 20px #333;
+  box-shadow: 0 0 .2rem #333,
+  
+  }
+
+  .center-image3 {
+    text-align:center;
+    display: flex;
+  justify-content: center;
+
+  box-shadow: 0 0 20px #eeeeee;
+  box-shadow: 0 0 .2rem #eeeeee,
+  
+
+    
+  }
+
+  
+  .center-image4 {
+    text-align:center;
+    display: flex;
+  justify-content: center;
+ 
+  box-shadow: 0 0 20px red;
+  box-shadow: 0 0 .2rem red,
+ 
+  
+
+    
+  }
+
+  
+  .center-image5 {
+    text-align:center;
+    display: flex;
+  justify-content: center;
+ 
+  box-shadow: 0 0 20px red;
+  box-shadow: 0 0 .2rem red,
+ 
+  
+
+    
+  }
+
+  .here-link {
+    color: #D80650;
+   
+    font-family: font-serif;
+    font-size: 22px;
+    line-height: 1.5;
+  }
+
+  .hear-link:visited {
+    color: #eeeeee;
+    font-family: font-serif;
+    font-size: 22px;
+    line-height: 1.5;
+  }
+
+
+  .center-image6 {
+    text-align:center;
+    display: flex;
+  justify-content: center;
+ 
+  box-shadow: 0 0 20px grey;
+  box-shadow: 0 0 .2rem black,
+ 
+  
+
+    
+  }
+  
+
+  
+  .center-image7 {
+    text-align:center;
+    display: flex;
+  justify-content: center;
+ 
+  box-shadow: 0 0 20px #D2B985;
+  box-shadow: 0 0 .2rem #D2B985,
+ 
+  
+
+    
+  }
+
+  .center-image8 {
+    text-align:center;
+    display: flex;
+  justify-content: center;
+ 
+  box-shadow: 0 0 20px #2B2E43;
+  box-shadow: 0 0 .2rem #2B2E43,
+ 
+  
+
+    
+  }
+
+
+
+
+
+
+ 
+
+
+
+.beautiful {
+  color: #eeeeee;
+  font-family: font-serif;
+  font-size: 49pt;
+  letter-spacing: 11px;
+  text-shadow: 0px 0px 25px red, 0px 0px 25px red;
+ 
+    
+    
+
+
+
+
+display: flex;
+}
+
+@keyframes blink {
+  from {
+    text-shadow: 0px 0px 0px transparent;
+    opacity: 0.3;
+  }
+  25% {
+    text-shadow: 0px 0px 0px transparent;
+    opacity: 0.3;
+  }
+  30% {
+    text-shadow: 0px 0px 0px transparent;
+    opacity: 0.3;
+  }
+  50% {
+    text-shadow: 0px 0px 25px red, 0px 0px 25px red,
+      0px 0px 25px red, 0px 0px 25px red;
+    opacity: 0.7;
+  }
+  75% {
+    text-shadow: 0px 0px 0px transparent;
+    opacity: 0.3;
+  }
+  to {
+    text-shadow: 0px 0px 0px transparent;
+    opacity: 0.3;
+  }
+}
+
+
+
+
+
+.neon-line {
+  width: 100%;
+  height: 3.5px;
+  background-color: red;
+  position: relative;
+  overflow: hidden;
+}
+
+.neon-line::before,
+.neon-line::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, red, transparent);
+  background: linear-gradient(to left, transparent,black, transparent);
+}
+
+.neon-line::before {
+  left: -100%;
+  animation: neon-glow-left 3s linear infinite;
+}
+
+.neon-line::after {
+  right: -100%;
+  animation: neon-glow-right 5s linear infinite;
+}
+
+@keyframes neon-glow-left {
+  0%, 100% {
+    transform: translateX(0%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes neon-glow-right {
+  0%, 100% {
+    transform: translateX(0%);
+  }
+  50% {
+    transform: translateX(-100%);
+  }
+}
+
+
+.magenta{
+  color:magenta
+}
+
+.cool-blue {
+  color: #3a86ff; 
+}
+
+.cool-green {
+  color: #00c2a8; 
+}
+
+.cool-purple {
+  color: #805ad5; 
+}
+
+.red{
+  color:red;
+}
+
+.forest{
+  color:#228B22;
+}
+
+/* Default border style */
+.phone-border {
+  border: 2px solid black;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 600px) {
+  .phone-border {
+    border-width: 1px;
+  }
+}
+
+/* Media query for larger screens */
+@media (min-width: 601px) {
+  .phone-border {
+    border-width: 3px;
+  }
+}
