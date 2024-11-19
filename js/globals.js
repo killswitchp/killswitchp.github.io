@@ -41,7 +41,7 @@ const blogs = [
   { name: "Wannacry Ransomware", file: "wannacry.html" },
   { name: "Tumbaad", file: "blog2.html" },
   {name: "Pivot", file: "pivot.html"},
-  {name: "Zephyr Review 2024", file: "zephyr.html"}
+  { name: "HTB CDSA Review 2024", file: "cdsa.html" }
 ];
 
 const pages = blogs.map((item) => item.file);
