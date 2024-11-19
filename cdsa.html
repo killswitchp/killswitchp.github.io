@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=0.4">
+    <title>PNPT Review 2023</title>
+    <link rel="icon" href="favicon_io (3)/favicon-32x32.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/cdsa.css">
+</head>
+<body>
+
+    
+   
+    <div class="container">
+        
+        
+        
+        <br>
+        
+            <div class="neon-line"></div>
+          
+    
+   
+        <p id="title">
+            <div class=container>
+                <div class=beautiful id=BE>HTB CDSA (Certified Defensive Security Analyst) Review 2024</div>
+                
+              </div>
+              
+              <br>
+              
+                  <div class="neon-line"></div>
+                
+        </p>
+<br>
+<p id="sub-title">
+    1. Introduction:  
+</p>
+<p> I'm happy to announce that I'm <span style="color:#4faef7;text-shadow: 0 0 5px #80f1fc;">HTB CDSA</span> certified finally (no pun intended)!!!!!!!!! In this blog I will be sharing my certification journey. Before all that I would love to thank <span style="color:firebrick;text-shadow: 0 0 5px firebrick;"> Brainspill3r</span> for giving me the one year silver subscription worth 490 dollar which came with a exam HTB exam voucher + 1 year access to all modules. </p>
+
+<br>
+
+<img src="image/cdsa1.png" height="600" width="800" class="center-image"></img>
+<br>
+<br>
+<br>
+<div class="neon-line"></div>
+              
+
+<p id="sub-title">
+    2. What is CDSA and who is it for?
+    </p>
+    <img src="image/cdsa-sec.jpg" height="400" width="700" class="center-image"></img>
+    <p>
+    HTB Certified Defensive Security Analyst (HTB CDSA) is a highly hands-on certification that assesses the candidates’ security analysis, SOC operations, and incident handling skills. The following are the learning outcomes:
+</p>
+    <ul>
+        <li>SOC Processes & Methodologies</li>
+        <li>SIEM Operations (ELK/Splunk)</li>
+        <li>Tactical Analytics</li>
+        <li>Log Analysis</li>
+        <li>Threat Hunting</li>
+        <li>Active Directory Attack Analysis</li>
+        <li>Network Traffic Analysis (Incl. IDS/IPS)</li>
+        <li>Malware Analysis</li>
+        <li>DFIR Operations</li>
+      </ul>
+      <p>
+        I pursued this certification mainly to learn <span style="color:#6600cc;">Threat Hunting</span> and understand how various attacks carried out by Red Teamers and Pentesters are detected. The depth of some modules was fascinating. For example, I always knew that injecting Mimikatz into memory could be used for evasion but never really understood how this worked at the lower level. Completing the modules gave me that clarity. If you're curious, I highly recommend reading through those modules 😉! 
+
+        Even though Red Teamers carefully plan their attacks, they always leave traces. Concepts like C# injection and process injection were covered at a base level, and I learned how they can be detected.
+    </p>
+    <p>
+        I highly suggest this certification not only for individuals interested in blue team but also for Red Teamers and Pentesters. Understanding how Blue Teamers operate can offer valuable insights into evasion techniques. To be an exceptional Red Teamer or Pentester, it's always good to know how defenses work.
+    </p>
+<p> <span style="color:#b03120;">Red Team</span>VS <span style="color:#1436dd;">Blue Team </span>: One thing I noticed is that for pentesting, you don't really need to understand how the Kerberos protocol works; you can just use tools to exploit it with attacks like Kerberoasting or AS-REP roasting. But for blue team work, you need to understand it at a basic level to detect these attacks and know how tools like Rubeus operate.</p>    
+    <div class="neon-line"></div>
+
+    
+              
+<div class="neon-line"></div>
+<p id="sub-title">
+    3. Pre-Requisites
+
+</p>
+<img src="image/prereq.png" height="300" width="900" ></img>
+<p>
+    I personally think to do Blue Teaming well, one should know how attackers work, so it's important to understand pentesting (both Active Directory and Web penetration testing) and basic red teaming. I highly suggest anyone taking the CDSA course without a pentesting background to first set up a simple AD homelab and practice various AD (Active Directory) attacks. There are many learning resources available, from YouTube to HTB Academy modules. Also, familiarize yourself with the OWASP Top 10 and how to exploit it. The course covers AD attacks in detail, but learning it beforehand makes things much easier.
+
+</p>
+
+<p>
+HTB themselves also have <a href="https://academy.hackthebox.com/path/preview/soc-analyst-prerequisites#:~:text=The%20SOC%20Analyst%20Prerequisites%20path,well%20as%20working%20with%20Assembly.">SOC Analyst Prerequisite path</a> which covers all the pre-requisisite mentioned earlier and I highly sugggest anyone with non-pentesting background to complete all the 10 modules in the path. Another advantage of completing this path is the "Intro to Assembly module" and this greatly helps people to familiarize with Assembly Language Programming (ALP) as basic knowledge of ALP is required to complete Intro to malware analysis module.
+</p>
+
+<p><span style="color:#ff0000;text-shadow: 0 0 5px #ff0000;">Important Note </span>: Apart from this I don't think you need have any previous knowledge blue team or tools such as Splunk or Elastic, the modules teach it really well. </p>
+
+    <div class="neon-line"></div>
+    
+
+    <p id="sub-title">
+        4. Course Overview
+<br>
+<br>
+
+        <img src="image/modules.png" height="400" width="600" class="center-image"></img>
+        </p>
+        <p>CDSA path consists of the following 15 modules: (if you meet the pre-requisites, all the 15 modules are much easier to learn)</p>
+
+
+<ul>
+    <li>Incident Handling Process</li>
+    <li>Security Monitoring & SIEM Fundamentals</li>
+    <li>Introduction to Threat Hunting & Hunting With Elastic</li>
+    <li>Windows Event Logs & Finding Evil</li>
+    <li>Understanding Log Sources & Investigating with Splunk</li>
+    <li>Windows Attacks & Defense</li>
+    <li>Intro to Network Traffic Analysis</li>
+    <li>Intermediate Network Traffic Analysis</li>
+    <li>Working with IDS/IPS</li>
+    <li>Introduction to Malware Analysis (If you aren't familiar with Assembly Language Programming, I highly suggest completing <a href="https://academy.hackthebox.com/course/preview/intro-to-assembly-language">Intro to Assembly Language</a> module from HTB, which will familiarize you with Assembly Language.)</li>
+    <li>JavaScript Deobfuscation</li>
+    <li>YARA & Sigma for SOC Analysts</li>
+    <li>Introduction to Digital Forensics</li>
+    <li>Detecting Windows Attacks with Splunk</li>
+    <li>Security Incident Reporting</li>
+</ul>
+<p>
+For me it took almost 4-5 months to finish all the modules. I think the preparation time greatly varies from people to people.
+    
+</p>
+    <div class="neon-line"></div>
+
+
+    
+<p id="sub-title">
+    5. My background
+    </p>
+    <p>
+
+    I hold penetration testing certifications like PNPT from <span style="color:#c62b52;">TCM Security</span> and eJPTv1 from <span style="color:#de7332;">eLearnSecurity</span> and hence I'm very much familiar with Active Directory and Web penetration testing. I've also done multiple challenges on <span style="color:#9fef00;">Hack The Box</span> and <span style="color:#b12a1f;">TryHackMe</span>, including HTB Pro Labs (Dante, Zephyr, Offshore). On the Blue Team side, I've completed Practical Malware Analysis and Triage (PMAT), Detection Engineering, and Digital Forensics courses from <span style="color:#c62b52;">TCM Security</span> .  I also hold a Bachelors degree in Electronics and Communication engineering (I know advanced networking and basic assembly language programming) and MSc in Cybersecurity Engineering.
+    
+</p>
+
+<div class="neon-line"></div>
+
+    <p id="sub-title">
+        5. Modules Review
+        </p>
+        <p>All the modules were well structured and very detailed.</p>
+        <p>
+            Although I liked the modules, the following are my favorite modules:
+        <ul>
+            
+            <li><p class="elastic">Introduction to Threat Hunting & Hunting With Elastic - This module focuses on investigating incidents by analyzing data to understand how an attack unfolded through each stage of the attacker’s kill chain. Threat hunting becomes engaging as you correlate evidence left behind, identify tactics, techniques, and procedures (TTPs) used, and piece together how the adversary advanced through the environment. </p> </li>
+            <li><p class="splunk">Understanding Log Sources & Investigating with Splunk- In this module, one has to investigate incidents and detect cool attacks like C# injection, stealthy LSASS access using comsvs.dll, and process injection.</p></li>
+            <li><p>Introduction to Digital Forensics 🔎 -  Memory and disk forensics were performed, and Cobalt Strike beacon execution was analyzed and it was very fascinating to see the evidences left behind by the beacon.</p></li>
+            <li><p>Windows Attack and Defense ⚔️ 🛡️- It covered event IDs and ideas for detecting Windows and AD-based attacks. It also taught how to set up a honeypot and understand how event IDs for detecting the attacks can vary when a honeypot is used.</p></li>
+            <li><p>Intro Malware Analysis🐞🪲 - This segment taught both and dynamic analysis of malware. The dynamic analysis part seemed hard in the start but as I put time into it and learnt it patiently, I really enjoyed it.Completing the skills assesment of this segment gave me a immense sense of achievement.</p></li>
+        </ul>
+        </p>
+
+        <div class="neon-line"></div>
+    <p id="sub-title">
+        6. Extra Preparation?
+        
+        </p>
+
+        <img src="image/study-cdsa.png" height="400" width="700"></img>
+        <p>Completing all the 15 modules is more than enough and the modules greatly prepare you to face the exam. I completed all the 15 modules and just did <a class="splunk">Boss of Splunk 2</a>. <a class="splunk">Boss of Splunk 2</a> is a good practice and it you get chance to investigate a complete incident but I wouldn't tell tell its mandatory to do it. </p>
+<p> Before taking the exam, I would recommend to revise all the modules and hence take good notes and do the modules sincerely. For the reporting, <span style="color:#828a2b;">Sysreptor 🦖</span> comes in handy and makes reporting so easier, you don't have to worry much about the strcuture or formatting because its already done for you in the template. <a href="https://thedfirreport.com/"> DFIR Report site</a> contains various incident response reports and going trhough them not only gives you as idea of reporting but also familiarizes you with various incidents and how to detect it. Apart from this HTB's own <a href="https://docs.google.com/document/d/e/2PACX-1vTkpIEicOwy8tRNAxKa4f4cMpc7wrUHRM5Nr_A_bObpzDQg5pAvj7jniHa_uVWQCuHLr21hQO64BsVi/pub">Incident response report</a> can give you an idea of how to write your exam report. </p>
+<div class="neon-line"></div>
+    
+
+<p id="sub-title">
+    7. CDSA Path Feedback
+    </p>
+    <p> Although I did mention that all the modules were very well structured and greatly detailed, I also have some feedback for the CDSA path:</p>
+<p>1. The Digital Forensics module was awesome, but then I felt like there was slightly a lack of information regarding <span style="color:#4da831;">Velociraptor tool 🦖</span>, It would be great if the module explained it in more detail. </p>
+<p>2. Phishing 🎣 being the most popular attack in present day to gain foothold, there could be an exclusive module on how to detect phishing email.</p>
+   <p>3. I personally enjoyed the threat hunting modules and would love to see more threat hunting modules added. (Looking forward for a module on Threat Hunting a C2 beacon).</p>
+   <p>4. The capstone for malware analysis 🔎 could have been a challenge to analyze a malware completely i.e. both statically and dynamically.</p>
+
+   
+<div class="neon-line"></div>
+   
+<p id="sub-title">
+    7. Exam Overview
+    </p>
+    <p>
+    CDSA exam is a 7- day exam in which one has to investigate 2 incidents and submit a report. One has to find  atleast 17 flags out of 20 flags to the pass the exam. I found 17 flags and completed my exam in 2 days  but the most challanging part was the reporting.
+</p>
+<p>
+    The reporting is very challenging because one has to chain all the findings and has to conclude how the attack happened. For me since I had a pentesting/red-teamming background I wanted my report to narrate the incident perfectly without missing any chain and <a href="https://attack.mitre.org/">MITRE Framework</a> comes in handy. Lets say for example you are looking for the persistence stage, you can check MITRE Framework for the techniques employed by the attacker to achieve persistnce and can look for it.
+</p>
+
+
+<div class="neon-line"></div>
+
+<p id="sub-title">
+    9. Some Special Mentions
+<p>I would love to thank the <span style="color:#9fef00;">HTB Support Team 🫸🫷</span>  (Mike, Miticosm, PoURaN and others) who helped sort out the issues I had regarding my account. HTB Support Team is amazing, if you have any issue regarding the exam, they quickly respond to it and sort it out as well.</p>
+<p> <span style="color:#7ed4e1"> H0lyWat3r💧</span>( <a href="https://nzf07.github.io/">https://nzf07.github.io/</a> ) was the reason I enterred the the lucky draw spin conducted by Brainspill3r, I was out that day and hence didn't join the stream and joined it in the last moment and hence didn't want to participate in the draw but <span style="color:#7ed4e1;"> H0lyWat3r</span> insisted me to do it and I did it and I won it as well!! Thanks <span style="color:#7ed4e1;">H0ly</span>! Life is such a butterfly-effect 🦋 indeed I guess.</p>
+<p>I would also like to thank <span class="scriptie">scriptie</span> who gave me a lot of insights on red teamming and  <span class="kit3ak">kit3ak </span> who always shared to me his real-world threat hunting experience.</p>
+
+
+<div class="neon-line"></div>
+
+<p id="sub-title">
+   10. Conclusion
+   </p>
+   <img src="image/cdsa-conclusion.png" height="400" width="600"></img>
+   <p>
+    
+    I'm incredibly grateful for the opportunity to take this exam 🙌! The experience was nothing short of amazing, and I learned so much throughout the process. The exam was challenging; I had to apply the concepts I learnt from all the modules to find evidence of the attack and, for reporting, piece everything together to create a cohesive incident analysis. It was a demanding but incredibly rewarding experience.
+
+    I look forward to seeing Hack The Box release even more advanced defensive certifications 🛡️! At the same time, I'm planning to further strengthen my red-team skillset. There are still many miles to go..........
+</p>
+   <div class="neon-line"></div>
+
+  
+    
+</div>
+</body>
+</html>
