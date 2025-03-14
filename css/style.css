@@ -101,7 +101,13 @@ body {
 .prompt-wrapper {
   display: flex;
   gap: 0.5rem;
+  position: sticky;
+  bottom: 0;
+  background-color: var(--background);
+  padding: 0.5rem;
+  z-index: 5;
 }
+
 
 #prompt {
   display: inline-block;
@@ -267,6 +273,15 @@ body {
 #date{
   color: var(--secondary);
 }
+
+.current-date {
+  background-color: var(--primary);
+  color: var(--background);
+  font-weight: bold;
+  border-radius: 50%;
+  text-align: center;
+}
+
 
 
 #vi {
