@@ -1,0 +1,10 @@
+updated news command
+made it so you can tab after 'cat' like in actual linux (same with settheme)
+added it so you can ctrl + c to reset
+added more themes, made it so enabling light mode gives you a warning
+added a way to change their username
+
+
+           GET https://api.dictionaryapi.dev/api/v2/entries/en/yoo 404 (Not Found)
+
+sam,e with ascii
