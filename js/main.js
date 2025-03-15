@@ -143,8 +143,36 @@ const themes = {
     "--primary": "#FF00FF",
     "--background": "#000000",
     "--secondary": "#FFFF00"
+  },
+  light: {
+    "--primary": "#333333",
+    "--background": "#ffffff",
+    "--secondary": "#666666"
+  },
+  ocean: {
+    "--primary": "#005f73",
+    "--background": "#e0fbfc",
+    "--secondary": "#94d2bd"
+  },
+  pastel: {
+    "--primary": "#ffadad",
+    "--background": "#ffd6a5",
+    "--secondary": "#fdffb6"
+  },
+  cyberpunk: {
+    "--primary": "#ff4d6d",
+    "--background": "#2b2d42",
+    "--secondary": "#8d99ae"
+  },
+  forest: {
+    "--primary": "#2f3e46",
+    "--background": "#84a98c",
+    "--secondary": "#cad2c5"
   }
 };
+if (window.innerWidth < 480) {
+  prompt = `>$`;
+}
 
 let commandHistory = [];
 let historyIndex = 0;
@@ -170,10 +198,9 @@ function executeCommand(userInput) {
       let social = "Will update when I need a job!!!!!!!!!";
       return `<p class="message">${social}</p>`;
 
-    case "id":
-      let id = "uid=1002(guest) gid=1002(guest) groups=1002(guest)";
-      return `<p class="message">${id}</p>`;
-
+      case "id":
+        let id = `uid=1002(${username}) gid=1002(${username}) groups=1002(${username})`;
+        return `<p class="message">${id}</p>`;
     case "echo":
       return `<p class="message">${userInput.substring(5)}</p>`;
 
@@ -196,7 +223,20 @@ function executeCommand(userInput) {
       return `<a class="message" href="https://mail.google.com/mail/u/0/#inbox?compose=CllgCJqTfghgTtLnhcHJQhMrsSWsjlVQqBzLmWlvDFkrfqrgPrXmmsFKWDlCGvpkwmXJbmdfnPg">${mail}</a>`;
 
     case "whoami":
-      return `<p class="message">guest</p>`;
+      return `<p class="message">${username}</p>`;
+
+      case "setuser":
+        if (!args) return `<p class="error">Usage: setuser &lt;name&gt;</p>`;
+        setUsername(args);
+        return `<p class="success">Username changed to <strong>${args}</strong>.</p>`;
+
+      case "ascii":
+        if (!args) return `<p class="error">Usage: ascii &lt;text&gt;</p>`;
+        return fetchASCIIArt(args);
+
+    case "define":
+      if (!args) return `<p class="error">Usage: define &lt;word&gt;</p>`;
+      return fetchDefinition(args);
 
     case "sudo":
       window.open("https://www.youtube.com/watch?v=IVRlYIjKy0A");
@@ -288,20 +328,6 @@ function executeCommand(userInput) {
       playAds();
       return;
 
-    case "theme":
-      if (!pages.includes(args)) {
-        const colour = userInput.substring(6); 
-        if (validColours.includes(colour)) {
-          const styleElement = document.createElement('style');
-          styleElement.innerHTML = `:root { --primary: ${colour}; }`;
-          document.head.appendChild(styleElement);
-          return `<p class="success">Colour changed</p>`;
-        } else {
-          return `<p class="success">No colour entered. Sample input --> theme red</p>`;
-        }
-      }
-
-
       case "secret":
         if (!secretActive) {
           document.body.style.backgroundImage = "url(assets/lizard-dance.gif)";
@@ -324,17 +350,47 @@ function executeCommand(userInput) {
       editorDOM.focus();
       return;
 
-    case "news":
-      const headlines = [
-        "Breaking: New tech innovation announced!",
-        "Market Update: Stocks are on the rise.",
-        "Sports: Local team wins championship!",
-        "Weather: Expect sunny skies all week."
-      ];
-      let newsHTML = "<ul class='news'>";
-      headlines.forEach(headline => newsHTML += `<li>${headline}</li>`);
-      newsHTML += "</ul>";
-      return newsHTML;
+      case "news":
+        const headlines = [
+          "Breaking: New tech innovation announced!",
+          "Market Update: Stocks on the rise!",
+          "Sports: Local team wins championship!",
+          "Weather: Expect sunny skies all week.",
+          "Politics: New policy reforms unveiled!",
+          "Entertainment: Celebrity scandal rocks Hollywood!",
+          "Health: New breakthrough in medical research!"
+        ];
+      
+        const summaries = [
+          "A revolutionary gadget is set to transform everyday life.",
+          "Investors are optimistic following strong economic data.",
+          "The championship title was clinched in a thrilling game.",
+          "Meteorologists forecast a week of pleasant weather.",
+          "Government announces sweeping reforms that could change the industry.",
+          "The celebrity news is stirring up conversations online.",
+          "Scientists have discovered a promising new treatment."
+        ];
+      
+        const categories = ["Tech", "Finance", "Sports", "Weather", "Politics", "Entertainment", "Health"];
+      
+        let newsHTML = "<div class='news-container'>";
+        const numberOfItems = Math.floor(Math.random() * 3) + 3;
+        for (let i = 0; i < numberOfItems; i++) {
+          const headline = headlines[Math.floor(Math.random() * headlines.length)];
+          const summary = summaries[Math.floor(Math.random() * summaries.length)];
+          const category = categories[Math.floor(Math.random() * categories.length)];
+          const minutesAgo = Math.floor(Math.random() * 60) + 1;
+          newsHTML += `
+            <div class='news-item'>
+              <h3>${headline}</h3>
+              <p>${summary}</p>
+              <span class='news-meta'>${category} • ${minutesAgo} minutes ago</span>
+            </div>
+          `;
+        }
+        newsHTML += "</div>";
+        return newsHTML;
+      
 
     case "joke":
       const jokes = [
@@ -359,17 +415,38 @@ function executeCommand(userInput) {
          ||     ||`;
       return `<pre class='message'>${cowMessage}\n${cowArt}</pre>`;
 
-    case "settheme":
-      const themeName = args.trim();
-      if (themes[themeName]) {
-        Object.keys(themes[themeName]).forEach(varName => {
-          document.documentElement.style.setProperty(varName, themes[themeName][varName]);
-        });
+      case "settheme":
+        const themeName = args.trim();
+        if (!themeName) {
+            return `<p class='message'>Available themes: ${Object.keys(themes).join(", ")}</p>`;
+        }
+        if (!themes[themeName]) {
+            return `<p class='message'>Theme not found. Available themes: ${Object.keys(themes).join(", ")}</p>`;
+        }
+    
+        if (themeName === "light") {
+            waitingForConfirmation = true;
+            return `<p class='error'>Warning: Enabling light mode is a war crime! Type <strong>confirmLightMode</strong> to proceed.</p>`;
+        }
+    
+        applyTheme(themeName);
         return `<p class='message'>Theme set to ${themeName}</p>`;
-      } else {
-        return `<p class='message'>Available themes: ${Object.keys(themes).join(", ")}</p>`;
-      }
-
+    
+    case "confirmLightMode":
+        if (waitingForConfirmation) {
+            waitingForConfirmation = false;
+            applyTheme("light");
+            return `<p class='message'>Light mode enabled. You monster.</p>`;
+        } else {
+            return `<p class='error'>No pending light mode confirmation.</p>`;
+        }
+    
+    function applyTheme(themeName) {
+        Object.keys(themes[themeName]).forEach(varName => {
+            document.documentElement.style.setProperty(varName, themes[themeName][varName]);
+        });
+    }
+    
     case "logs":
       const logs = [
         "[INFO] System initialized.",
@@ -406,23 +483,56 @@ function handleInput(event) {
     }
     inputEl.value = "";
     outputEl.innerHTML += `<div class="prompt-wrapper"><span>${prompt}</span><span>${userInput}</span></div>`;
+    
     let result = executeCommand(userInput);
-    if (result) outputEl.innerHTML += result;
+    if (result instanceof Promise) {
+      result.then(res => {
+        outputEl.innerHTML += res;
+      });
+    } else {
+      outputEl.innerHTML += result;
+    }
+
     setTimeout(() => {
       inputEl.scrollIntoView({ behavior: "smooth", block: "end" });
     }, 50);
     return;
   }
 
-  // autocompletion
+  // Handle Tab for autocompletion
   if (event.key === "Tab") {
     event.preventDefault();
     const currentInput = inputEl.value;
-    const possibleCommands = Object.keys(commands).filter(cmd => cmd.startsWith(currentInput));
-    if (possibleCommands.length === 1) {
-      inputEl.value = possibleCommands[0] + " ";
-    } else if (possibleCommands.length > 1) {
-      outputEl.innerHTML += `<p class='message'>${possibleCommands.join(" ")}</p>`;
+
+    // Autocomplete for "cat" command (files)
+    if (currentInput.startsWith("cat ")) {
+      const parts = currentInput.split(" ");
+      const filePart = parts.slice(1).join(" ");
+      const matchingFiles = pages.filter(file => file.startsWith(filePart));
+      if (matchingFiles.length === 1) {
+        inputEl.value = "cat " + matchingFiles[0];
+      } else if (matchingFiles.length > 1) {
+        outputEl.innerHTML += `<p class='message'>${matchingFiles.join(" ")}</p>`;
+      }
+    }
+    // Autocomplete for "settheme" command (themes)
+    else if (currentInput.startsWith("settheme ")) {
+      const parts = currentInput.split(" ");
+      const themePart = parts.slice(1).join(" ");
+      const matchingThemes = Object.keys(themes).filter(theme => theme.startsWith(themePart));
+      if (matchingThemes.length === 1) {
+        inputEl.value = "settheme " + matchingThemes[0];
+      } else if (matchingThemes.length > 1) {
+        outputEl.innerHTML += `<p class='message'>${matchingThemes.join(" ")}</p>`;
+      }
+    }
+      else {
+      const possibleCommands = Object.keys(commands).filter(cmd => cmd.startsWith(currentInput));
+      if (possibleCommands.length === 1) {
+        inputEl.value = possibleCommands[0] + " ";
+      } else if (possibleCommands.length > 1) {
+        outputEl.innerHTML += `<p class='message'>${possibleCommands.join(" ")}</p>`;
+      }
     }
     return;
   }
@@ -472,7 +582,44 @@ const startTime = Date.now();
 document.addEventListener("click", () => {
   inputEl.focus();
 });
+let username = localStorage.getItem("username") || "guest";
+function setUsername(newName) {
+  username = newName;
+  localStorage.setItem("username", newName);
+  prompt = `[${username}@localhost ~]$ `; 
+  updatePromptUI();
+}
+async function fetchASCIIArt(text) {
+  return new Promise((resolve) => {
+    figlet(text, "Standard", (err, asciiArt) => {
+      if (err) {
+        resolve("<p class='error'>Failed to generate ASCII art.</p>");
+      } else {
+        resolve(`<pre class='ascii-art'>${asciiArt}</pre>`);
+      }
+    });
+  });
+}
 
+async function fetchDefinition(word) {
+  const apiUrl = `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`;
+  try {
+    let response = await fetch(apiUrl);
+    let data = await response.json();
+    if (!Array.isArray(data) || data.length === 0 || data.title) {
+      return `<p class='error'>Word not found.</p>`;
+    }
+    let definition = data[0]?.meanings?.[0]?.definitions?.[0]?.definition || "No definition found.";
+    return `<p class='message'><strong>${word}:</strong> ${definition}</p>`;
+  } catch (error) {
+    return `<p class='error'>Failed to fetch definition.</p>`;
+  }
+}
+function updatePromptUI() {
+  if (promptDOM) {
+    promptDOM.innerText = prompt;
+  }
+}
 // calendar
 function generateCalendar() {
   const today = new Date();
@@ -552,4 +699,92 @@ function startMatrix() {
     document.body.removeChild(canvas);
   }, 5000);
 }
-console.log("Modified by https://github.com/ch4rlesexe")
+document.addEventListener("keydown", (e) => {
+  if (e.ctrlKey && e.key.toLowerCase() === "c") {
+    exitActiveModes();
+  }
+});
+
+function exitActiveModes() {
+  if (typeof viDOM !== "undefined" && !viDOM.classList.contains("hidden")) {
+    viDOM.classList.add("hidden");
+  }
+
+  const matrixCanvas = document.getElementById("matrixCanvas");
+  if (matrixCanvas) {
+    if (window.matrixInterval) {
+      clearInterval(window.matrixInterval);
+      window.matrixInterval = null;
+    }
+    if (window.matrixTimeout) {
+      clearTimeout(window.matrixTimeout);
+      window.matrixTimeout = null;
+    }
+    document.body.removeChild(matrixCanvas);
+  }
+
+  if (typeof adDOM !== "undefined" && !adDOM.classList.contains("hidden")) {
+    adDOM.classList.add("hidden");
+    if (window.adMusic) {
+      window.adMusic.pause();
+      window.adMusic = null;
+    }
+    clearTimeout(adTime);
+    clearTimeout(gifTime);
+  }
+
+  if (secretActive) {
+    document.body.style.backgroundImage = "";
+    inputEl.value = "";
+    if (window.secretMusic) {
+      window.secretMusic.pause();
+    }
+    secretActive = false;
+  }
+}
+document.addEventListener("keydown", (e) => {
+  if (e.ctrlKey && e.key.toLowerCase() === "c") {
+    exitActiveModes();
+  }
+});
+
+function exitActiveModes() {
+  if (typeof viDOM !== "undefined" && !viDOM.classList.contains("hidden")) {
+    viDOM.classList.add("hidden");
+  }
+
+  const matrixCanvas = document.getElementById("matrixCanvas");
+  if (matrixCanvas) {
+    if (window.matrixInterval) {
+      clearInterval(window.matrixInterval);
+      window.matrixInterval = null;
+    }
+    if (window.matrixTimeout) {
+      clearTimeout(window.matrixTimeout);
+      window.matrixTimeout = null;
+    }
+    document.body.removeChild(matrixCanvas);
+  }
+
+  if (typeof adDOM !== "undefined" && !adDOM.classList.contains("hidden")) {
+    adDOM.classList.add("hidden");
+    if (window.adMusic) {
+      window.adMusic.pause();
+      window.adMusic = null;
+    }
+    clearTimeout(adTime);
+    clearTimeout(gifTime);
+  }
+
+  if (secretActive) {
+    document.body.style.backgroundImage = "";
+    inputEl.value = "";
+    if (window.secretMusic) {
+      window.secretMusic.pause();
+    }
+    secretActive = false;
+  }
+}
+updatePromptUI();
+
+//console.log("Modified by https://github.com/ch4rlesexe")
