@@ -8,3 +8,4 @@ added a way to change their username
            GET https://api.dictionaryapi.dev/api/v2/entries/en/yoo 404 (Not Found)
 
 sam,e with ascii
+need to remove the 'theme command'
