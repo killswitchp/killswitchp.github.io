@@ -17,6 +17,29 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+.digital-clock {
+  font-family: 'Courier New', monospace;
+  font-size: 24px;
+  font-weight: bold;
+  color: #00FF00;
+  background: black;
+  padding: 10px;
+  display: inline-block;
+  border-radius: 5px;
+  border: 2px solid #00FF00;
+  text-shadow: 0 0 5px #00FF00;
+}
+
+.clock-container {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.date-display {
+  font-size: 14px;
+  color: white;
+  margin-top: 5px;
+}
 
 #terminal {
   padding: 15px;

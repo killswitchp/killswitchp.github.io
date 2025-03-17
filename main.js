@@ -230,11 +230,10 @@ function executeCommand(userInput) {
         setUsername(args);
         return `<p class="success">Username changed to <strong>${args}</strong>.</p>`;
 
-/*
-        case "ascii":
+      case "ascii":
         if (!args) return `<p class="error">Usage: ascii &lt;text&gt;</p>`;
         return fetchASCIIArt(args);
-*/
+
     case "define":
       if (!args) return `<p class="error">Usage: define &lt;word&gt;</p>`;
       return fetchDefinition(args);
@@ -256,10 +255,6 @@ function executeCommand(userInput) {
       const currentDate = new Date();
       const formattedDate = currentDate.toString();
       return `<p id='date'>${formattedDate}</p>`;
-
-    case "github":
-      window.open("https://www.github.com/killswitchp")
-      return '<p class="message">Redirecting to GitHub...</p>';
 
     case "linkedin":
       window.open("https://www.linkedin.com/in/paavai-aram/");
@@ -308,19 +303,6 @@ function executeCommand(userInput) {
       getIpApi("out");
       return;
 
-    case "clock":
-      return clockCommand();
-
-    case "history":
-      return showHistory();
-
-    case "quote":
-      return quoteCommand();
-/*
-    case "calc":
-    case "calculator":
-      return calculatorCommand();*/
-
     case "ad":
       const adMusic = new Audio("./assets/audio/pico.mp3");
       adMusic.play();
@@ -345,6 +327,20 @@ function executeCommand(userInput) {
       }
       playAds();
       return;
+
+    case "theme":
+      if (!pages.includes(args)) {
+        const colour = userInput.substring(6); 
+        if (validColours.includes(colour)) {
+          const styleElement = document.createElement('style');
+          styleElement.innerHTML = `:root { --primary: ${colour}; }`;
+          document.head.appendChild(styleElement);
+          return `<p class="success">Colour changed</p>`;
+        } else {
+          return `<p class="success">No colour entered. Sample input --> theme red</p>`;
+        }
+      }
+
 
       case "secret":
         if (!secretActive) {
@@ -408,6 +404,7 @@ function executeCommand(userInput) {
         }
         newsHTML += "</div>";
         return newsHTML;
+      
 
     case "joke":
       const jokes = [
@@ -477,6 +474,7 @@ function executeCommand(userInput) {
     default:
       return `<p class='message'>Command not found: ${cmd}</p>`;
   }
+
   if (userInput == "cat blog1.html") {
     window.open("blog1.html");
     return `<p>Loading................</p>`;
@@ -489,102 +487,7 @@ function executeCommand(userInput) {
   }
   return `<p class='message'>Command not found: ${cmd}</p>`;
 }
-function showHistory() {
-  if (commandHistory.length === 0) {
-    return `<p class="message">No command history available.</p>`;
-  }
-  
-  let historyHTML = `<div class="history-container">`;
-  historyHTML += `<h3>Command History</h3>`;
-  historyHTML += `<ol class="history-list">`;
-  
-  const startIndex = Math.max(0, commandHistory.length - 30);
-  for (let i = startIndex; i < commandHistory.length; i++) {
-    historyHTML += `<li>${commandHistory[i]}</li>`;
-  }
-  
-  historyHTML += `</ol>`;
-  historyHTML += `</div>`;
-  
-  return historyHTML;
-}
 
-function clock() {
-  const now = new Date();
-  const hours = now.getHours().toString().padStart(2, '0');
-  const minutes = now.getMinutes().toString().padStart(2, '0');
-  const seconds = now.getSeconds().toString().padStart(2, '0');
-  
-  return `
-      <div class="clock">
-          <span class="time-part">${hours}</span>:
-          <span class="time-part">${minutes}</span>:
-          <span class="time-part">${seconds}</span>
-      </div>
-      <div class="date-display">${now.toDateString()}</div>
-  `;
-}
-
-function quoteCommand() {
-  const quotes = [
-    "Believe you can and you're halfway there. -Theodore Roosevelt",
-    "It does not matter how slowly you go as long as you do not stop. -Confucius",
-    "Act as if what you do makes a difference. It does. -William James",
-    "Success is not final, failure is not fatal: it is the courage to continue that counts. -Winston Churchill",
-    "Do what you can, with what you have, where you are. -Theodore Roosevelt",
-    "Dream big and dare to fail. -Norman Vaughan"
-  ];
-
-  const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-  return `<p class='quote'>${randomQuote}</p>`;
-}
-/*
-function calculatorCommand(input) {
-  try {
-      input = input.trim().replace(/\s+/g, '');
-
-      if (!/^[0-9+\-*/ //remove break here, there should be a */ here
-      /*().]+$/.test(input)) {
-          return `<p class='error'>Invalid input. Use only numbers and +, -, *, /.</p>`;
-      }
-
-      const result = eval(input);
-      if (isNaN(result) || result === Infinity || result === -Infinity) {
-          return `<p class='error'>Invalid mathematical operation.</p>`;
-      }
-
-      return `<p class='calculator'>Result: ${result}</p>`;
-  } catch (error) {
-      return `<p class='error'>Invalid expression.</p>`;
-  }
-}
-*/
-
-function clockCommand() {
-  const clockId = `clock-${Date.now()}`; // Unique ID for multiple clocks
-  setInterval(() => {
-    const now = new Date();
-    const hours = now.getHours().toString().padStart(2, '0');
-    const minutes = now.getMinutes().toString().padStart(2, '0');
-    const seconds = now.getSeconds().toString().padStart(2, '0');
-    
-    const clockElement = document.getElementById(clockId);
-    if (clockElement) {
-      clockElement.innerHTML = `
-        <div class="digital-clock">
-          <span class="clock-digit">${hours}</span>:
-          <span class="clock-digit">${minutes}</span>:
-          <span class="clock-digit">${seconds}</span>
-        </div>
-        <div class="date-display">${now.toDateString()}</div>
-      `;
-    }
-  }, 1000);
-
-  return `<div id="${clockId}" class="clock-container">
-            <div class="digital-clock">Loading...</div>
-          </div>`;
-}
 function handleInput(event) {
   if (event.keyCode === 13) {
     const userInput = inputEl.value.trim();
@@ -594,16 +497,8 @@ function handleInput(event) {
     }
     inputEl.value = "";
     outputEl.innerHTML += `<div class="prompt-wrapper"><span>${prompt}</span><span>${userInput}</span></div>`;
-    
     let result = executeCommand(userInput);
-    if (result instanceof Promise) {
-      result.then(res => {
-        outputEl.innerHTML += res;
-      });
-    } else {
-      outputEl.innerHTML += result;
-    }
-
+    if (result) outputEl.innerHTML += result;
     setTimeout(() => {
       inputEl.scrollIntoView({ behavior: "smooth", block: "end" });
     }, 50);
@@ -637,7 +532,8 @@ function handleInput(event) {
         outputEl.innerHTML += `<p class='message'>${matchingThemes.join(" ")}</p>`;
       }
     }
-      else {
+    // Fallback: autocomplete commands from the commands list
+    else {
       const possibleCommands = Object.keys(commands).filter(cmd => cmd.startsWith(currentInput));
       if (possibleCommands.length === 1) {
         inputEl.value = possibleCommands[0] + " ";
@@ -700,28 +596,25 @@ function setUsername(newName) {
   prompt = `[${username}@localhost ~]$ `; 
   updatePromptUI();
 }
-/*
 async function fetchASCIIArt(text) {
-  return new Promise((resolve) => {
-    figlet(text, "Standard", (err, asciiArt) => {
-      if (err) {
-        resolve("<p class='error'>Failed to generate ASCII art.</p>");
-      } else {
-        resolve(`<pre class='ascii-art'>${asciiArt}</pre>`);
-      }
-    });
-  });
+  const apiUrl = `https://artii.herokuapp.com/make?text=${encodeURIComponent(text)}`;
+  try {
+    let response = await fetch(apiUrl);
+    let asciiArt = await response.text();
+    return `<pre class='ascii-art'>${asciiArt}</pre>`;
+  } catch (error) {
+    return `<p class='error'>Failed to generate ASCII art.</p>`;
+  }
 }
-*/
 async function fetchDefinition(word) {
   const apiUrl = `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`;
   try {
     let response = await fetch(apiUrl);
     let data = await response.json();
-    if (!Array.isArray(data) || data.length === 0 || data.title) {
+    if (data.title) {
       return `<p class='error'>Word not found.</p>`;
     }
-    let definition = data[0]?.meanings?.[0]?.definitions?.[0]?.definition || "No definition found.";
+    let definition = data[0].meanings[0].definitions[0].definition;
     return `<p class='message'><strong>${word}:</strong> ${definition}</p>`;
   } catch (error) {
     return `<p class='error'>Failed to fetch definition.</p>`;
