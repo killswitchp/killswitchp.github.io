@@ -20,7 +20,7 @@ const commands = {
   whoami: "Shows your username",
   id: "Another way of telling who you are",
   setuser: "Changes your displayed username",
-  ascii: "Generates ASCII art from text",
+  //ascii: "Generates ASCII art from text",
   define: "Fetches word definitions",
   weather: "Shows weather for a city",
   about: "Voluntary personal information disclosure?!",
@@ -42,14 +42,19 @@ const commands = {
   uptime: "Displays system uptime",
   neofetch: "Displays system information",
   fortune: "Prints a random fortune message",
+  quote: "Displays a random quote message",
   cal: "Displays a calendar for the current month",
   uname: "Prints system information",
   linkedin: "Check out my LinkedIn",
+  github: "Check out my GitHub",
   news: "Displays simulated news headlines",
   joke: "Prints a random joke",
   matrix: "Activates matrix mode",
   cowsay: "Prints a message with a talking cow",
   settheme: "Sets terminal theme (e.g., settheme dark)",
+  clock: "Displays a live updating clock",
+  history: "Shows command history",
+  //calculator: "Add, subtract, multiply, or divide numbers",
   logs: "Displays simulated system logs"
 };
 
