@@ -1,0 +1,324 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'JetBrains Mono', monospace;
+    background-color: #0a0a0a;
+    color: #e0e0e0;
+    line-height: 1.7;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+header {
+    text-align: center;
+    padding: 100px 0 60px;
+    position: relative;
+    background: linear-gradient(180deg, #0f0f0f 0%, #0a0a0a 100%);
+    overflow: hidden;
+}
+
+/* Animated background effect */
+header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(79, 195, 247, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(3, 169, 244, 0.08) 0%, transparent 50%);
+    animation: shimmer 8s ease-in-out infinite;
+    z-index: 0;
+}
+
+@keyframes shimmer {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scale(1.1);
+    }
+}
+
+header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    font-weight: 600;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(135deg, #4fc3f7 0%, #29b6f6 25%, #03a9f4 50%, #0288d1 75%, #0277bd 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 200% 200%;
+    animation: gradient-flow 5s ease infinite, float 3s ease-in-out infinite;
+    text-shadow: 
+        0 0 40px rgba(79, 195, 247, 0.4),
+        0 0 80px rgba(79, 195, 247, 0.2);
+    letter-spacing: 3px;
+    line-height: 1.2;
+}
+
+@keyframes gradient-flow {
+    0%, 100% {
+        background-position: 0% 50%;
+        filter: brightness(1) hue-rotate(0deg);
+    }
+    50% {
+        background-position: 100% 50%;
+        filter: brightness(1.2) hue-rotate(5deg);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Glowing effect on hover */
+header h1:hover {
+    animation: gradient-flow 2s ease infinite, float 2s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px rgba(79, 195, 247, 0.8));
+}
+
+.subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.1rem;
+    font-weight: 400;
+    position: relative;
+    z-index: 1;
+    text-transform: uppercase;
+    letter-spacing: 6px;
+    background: linear-gradient(90deg, #64b5f6 0%, #4fc3f7 25%, #29b6f6 50%, #4fc3f7 75%, #64b5f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 200% auto;
+    animation: shine 3s linear infinite, fade-in 2s ease-in-out;
+    text-shadow: 
+        0 0 20px rgba(79, 195, 247, 0.5),
+        0 0 40px rgba(79, 195, 247, 0.3);
+}
+
+@keyframes shine {
+    0% {
+        background-position: 0% center;
+    }
+    100% {
+        background-position: 200% center;
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Decorative line after header */
+header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, #4fc3f7 50%, transparent 100%);
+    box-shadow: 0 0 20px rgba(79, 195, 247, 0.6);
+}
+
+.quote {
+    margin: 60px 0;
+    padding: 40px;
+    border-left: 4px solid #4fc3f7;
+    background: linear-gradient(135deg, #111 0%, #0f0f0f 100%);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.quote::before {
+    content: '"';
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    font-size: 4rem;
+    color: #4fc3f7;
+    opacity: 0.3;
+    font-family: 'Playfair Display', serif;
+}
+
+.quote p {
+    font-style: italic;
+    color: #b0b0b0;
+    font-size: 1.15rem;
+    line-height: 1.8;
+}
+
+.day-section {
+    margin: 80px 0;
+}
+
+h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 2.2rem;
+    color: #fff;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #1a4d5c;
+    position: relative;
+    background: linear-gradient(90deg, #4fc3f7 0%, #03a9f4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100px;
+    height: 2px;
+    background: #4fc3f7;
+    box-shadow: 0 0 10px rgba(79, 195, 247, 0.5);
+}
+
+.content p {
+    margin-bottom: 20px;
+    color: #ccc;
+    font-size: 1.05rem;
+}
+
+.content ul {
+    margin: 20px 0 20px 30px;
+    color: #ccc;
+}
+
+.content ul li {
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+/* Image styling */
+img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 16px;
+    margin: 40px 0;
+    border: 1px solid #333;
+    display: block;
+    object-fit: contain;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+img:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(79, 195, 247, 0.2);
+}
+
+.photo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 40px 0;
+}
+
+.photo-grid img {
+    margin: 0;
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 16px;
+    border: 1px solid #333;
+}
+
+.full-quality {
+    max-width: 1200px;
+    height: auto;
+    object-fit: none;
+}
+
+.photo-placeholder {
+    overflow: hidden;
+    border-radius: 16px;
+}
+
+@media (max-width: 1024px) {
+    .container {
+        max-width: 900px;
+    }
+    
+    header h1 {
+        font-size: 3.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2.5rem;
+        letter-spacing: 2px;
+    }
+
+    header {
+        padding: 60px 0 40px;
+    }
+
+    .subtitle {
+        font-size: 0.85rem;
+        letter-spacing: 3px;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    .photo-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .container {
+        padding: 20px 15px;
+        max-width: 100%;
+    }
+
+    .quote {
+        padding: 25px;
+        margin: 40px 0;
+    }
+
+    .photo-grid img {
+        height: 300px;
+    }
+
+    header::after {
+        width: 200px;
+    }
+}
+

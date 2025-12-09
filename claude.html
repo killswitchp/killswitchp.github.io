@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PNPT Review 2024</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/claude.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-decoration"></div>
+            <h1 class="main-title">
+                <span class="title-icon">🛡️</span>
+                PNPT Certification Journey
+            </h1>
+            <p class="subtitle">Mastering Practical Network Penetration Testing</p>
+            <div class="animated-border"></div>
+        </header>
+
+        <section class="section">
+            <h2 class="section-title">
+                <span class="section-icon">⚡</span>
+                Essential Commands Arsenal
+            </h2>
+            <p class="content-text">
+                These commands were my lifeline during the exam. Having them organized and ready 
+                saved me <em>hours</em> of precious time. Master these, and you'll be ahead of the curve.
+            </p>
+
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyToClipboard(this, 'bash')">bash</button>
+                <div class="code-wrapper">
+                    <div class="line-numbers">
+                        <span class="line-number">1</span>
+                        <span class="line-number">2</span>
+                        <span class="line-number">3</span>
+                        <span class="line-number">4</span>
+                        <span class="line-number">5</span>
+                        <span class="line-number">6</span>
+                        <span class="line-number">7</span>
+                        <span class="line-number">8</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><span class="comment"># Initial network discovery</span>
+<span class="command">nmap</span> <span class="flag">-sC -sV -oA</span> <span class="arg">initial_scan</span> <span class="variable">$TARGET</span>
+<span class="command">nmap</span> <span class="flag">-p-</span> <span class="flag">--min-rate</span> <span class="number">10000</span> <span class="variable">$TARGET</span>
+
+<span class="comment"># UDP scan for hidden services</span>
+<span class="command">nmap</span> <span class="flag">-sU</span> <span class="flag">--top-ports</span> <span class="number">1000</span> <span class="variable">$TARGET</span>
+
+<span class="comment"># Service enumeration</span>
+<span class="command">nmap</span> <span class="flag">--script</span> <span class="string">"vuln"</span> <span class="flag">-p</span> <span class="arg">80,443,445</span> <span class="variable">$TARGET</span></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyToClipboard(this, 'powershell')">powershell</button>
+                <div class="code-wrapper">
+                    <div class="line-numbers">
+                        <span class="line-number">1</span>
+                        <span class="line-number">2</span>
+                        <span class="line-number">3</span>
+                        <span class="line-number">4</span>
+                        <span class="line-number">5</span>
+                        <span class="line-number">6</span>
+                        <span class="line-number">7</span>
+                        <span class="line-number">8</span>
+                        <span class="line-number">9</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><span class="comment"># Import and basic enumeration</span>
+<span class="command">Import-Module</span> <span class="arg">PowerView.ps1</span>
+<span class="command">Get-NetDomain</span>
+<span class="command">Get-NetDomainController</span>
+
+<span class="comment"># User enumeration</span>
+<span class="command">Get-NetUser</span> <span class="operator">|</span> <span class="command">Select-Object</span> <span class="arg">samaccountname</span>
+<span class="command">Get-NetUser</span> <span class="flag">-SPN</span> <span class="operator">|</span> <span class="command">Select-Object</span> <span class="arg">serviceprincipalname</span>
+
+<span class="comment"># Group enumeration</span>
+<span class="command">Get-NetGroup</span> <span class="string">"Domain Admins"</span> <span class="operator">|</span> <span class="command">Get-NetGroupMember</span></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyToClipboard(this, 'css')">css</button>
+                <div class="code-wrapper">
+                    <div class="line-numbers">
+                        <span class="line-number">1</span>
+                        <span class="line-number">2</span>
+                        <span class="line-number">3</span>
+                        <span class="line-number">4</span>
+                        <span class="line-number">5</span>
+                        <span class="line-number">6</span>
+                        <span class="line-number">7</span>
+                        <span class="line-number">8</span>
+                        <span class="line-number">9</span>
+                        <span class="line-number">10</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><span class="comment">/* Terminal input styling */</span>
+<span class="arg">#terminal-input</span> {
+  <span class="keyword">font-size</span>: <span class="number">1rem</span>;
+  <span class="keyword">color</span>: <span class="function">var</span>(<span class="flag">--primary</span>);
+  <span class="keyword">font-family</span>: <span class="string">'JetBrains Mono'</span>, <span class="arg">monospace</span>;
+  <span class="keyword">background-color</span>: <span class="arg">transparent</span>;
+  <span class="keyword">border</span>: <span class="arg">none</span>;
+  <span class="keyword">outline</span>: <span class="arg">none</span>;
+  <span class="keyword">caret-color</span>: <span class="arg">transparent</span>;
+  <span class="keyword">border-right</span>: <span class="number">10px</span> <span class="arg">solid</span> <span class="function">var</span>(<span class="flag">--primary</span>);
+}</pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">
+                <span class="section-icon">🎯</span>
+                Pro Tips & Strategies
+            </h2>
+            
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <div class="tip-icon">⏰</div>
+                    <h3>Time Management</h3>
+                    <p>Don't spend more than <code>8 hours</code> on any single phase. If stuck, pivot to another target and return with fresh perspective.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-icon">📸</div>
+                    <h3>Documentation</h3>
+                    <p>Screenshot <em>everything</em>. Use <code>flameshot</code> with organized folder structure. Your future self will thank you.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-icon">🔄</div>
+                    <h3>Methodology</h3>
+                    <p>Follow a consistent process: <code>Recon → Exploitation → Post-Exploitation → Persistence → Escalation</code></p>
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-icon">🧠</div>
+                    <h3>Think Like an Attacker</h3>
+                    <p>Don't just find vulnerabilities—understand the <em>impact</em>. Chain attacks together for maximum effect.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">
+                <span class="section-icon">🏆</span>
+                Final Thoughts
+            </h2>
+            <div class="conclusion-card">
+                <p class="content-text">
+                    The PNPT certification was challenging but incredibly rewarding. It's not just about passing an exam—it's about developing real penetration testing skills that you'll use in the field.
+                </p>
+                <div class="highlight-box">
+                    <strong>Remember:</strong> <code>Practice makes permanent</code>, not perfect. Focus on understanding 
+                    the "why" behind each technique, not just memorizing commands.
+                </div>
+                <p class="content-text">
+                    When exam day comes, trust your preparation and embrace the challenge. You've got this!
+                </p>
+            </div>
+            
+            <div class="animated-border"></div>
+        </section>
+    </div>
+
+    <script>
+        // Simple, reliable copy function
+        function copyToClipboard(button, lang) {
+            const pre = button.parentNode.querySelector('pre');
+            const text = pre.textContent;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                button.textContent = 'copied!';
+                button.style.background = 'rgba(0, 255, 0, 0.2)';
+                button.style.color = '#00ff88';
+                button.style.borderColor = '#00ff88';
+                
+                setTimeout(() => {
+                    button.textContent = lang;
+                    button.style.background = '';
+                    button.style.color = '';
+                    button.style.borderColor = '';
+                }, 1500);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=0.4">
+    <title>PNPT Review 2023</title>
+    <link rel="icon" href="favicon_io (3)/favicon-32x32.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/pivot.css">
+</head>
+<body>
+   
+    <div class="container">
+        
+        
+        
+        <br>
+        
+            <div class="neon-line"></div>
+          
+    
+   
+        <p id="title">
+            <div class=container>
+                <div class=beautiful id=BE>Pivoting</div>
+                
+              </div>
+              
+              <br>
+              
+                  <div class="neon-line"></div>
+                
+        </p>
+<br>
+<p id="sub-title">
+    1. Introduction:  
+</p>
+<p>  I thought of writing a pivoting blog once I got PNPT certified but didn't, found some time to do it now finally! Lot of people find pivoting hard but its one of the simplest thing. People find it mainly hard because they don't know when to pivot. </p>
+
+<br>
+
+              
+<div class="neon-line"></div>
+<p id="sub-title">
+    2. Lab Setup:
+ 
+</p>
+<img src="image/pivot.png" height="400" width="800"  class="center-image6"></img>
+<p>- <span style="color:red;text-shadow: 0 0 5px red;">Attacker Kali Linux machine</span> => 192.168.3.12</p>
+<p>-<span style="color: rgb(225, 14, 225);text-shadow: 0 0 5px rgb(225, 14, 225);">Ubuntu Linux machine</span> => 192.168.3.11, 172.16.2.6</p>
+<p>-<span style="color:rgb(38, 153, 202);text-shadow: 0 0 5px rgb(38, 153, 202);">Windows machine</span> => 172.16.2.5</p>
+<p></p>
+<br>
+<br>
+              
+<div class="neon-line"></div>
+<p id="sub-title">
+    3. When to pivot and what is pivoting:
+</p>
+<p>The answer to both questions is the same. Let's assume that I utilized  Kali machine with the IP address 192.168.3.11 to compromise an Ubuntu Linux machine with the IP address 192.168.3.12 and gained SSH (as root user) access to it. Later,  I typed the <code>ip a</code> command and found that the Ubuntu machine also has an additional IP address, which is 172.16.2.6. What we can conclude from this is that the ubuntu linux is dual homed i.e. present in both the 192.168.12.0/24 and 172.16.2.0/24 network. Now before even pivoting, enumeration should be first done in the 192.168.12.0/24 network which we already have access to. Later in the 172.16.2.0/24 network.</p>
+<img src="image/dual-home.png" height="600" width="900" ></img>
+<p>I completed enumerating the 192.168.3.0/24 network (found no other alive hosts) and hence started to enumerate 172.16.2.0/24. Firstly I would look for the hosts alive in the network. The host 172.16.2.5 is of our interest since only windows machine have a TTL of 128. The bashscript I utilized to find the hosts alive:</p>
+<pre class="code-block">
+    <code class="language-bash">
+        for i in {1..255}; do (ping -c 1 172.16.2.$i | grep "bytes from" &);done
+    </code>
+    </pre>
+    
+    <img src="image/alivehosts.png" height="200" width="800" ></img>
+    
+    <p>Now that found a windows machine with IP 172.16.2.5 and also there is no other host in 192.168.3.0/24 network, I could simply proceed to pivot to the 172.16.2.0/24 network to find more about the windows machine. I will be utilizing 3 tools to pivot (sshuttle,chisel and ligolo-ng).</p>
+   
+<br>
+<br>
+<br>
+
+    <div class="neon-line"></div>
+    <p id="sub-title">
+    4. Sshuttle:
+<p>-This is like my most favourite tool to do pivoting. In order to use this tool, we need either need a ssh private key or ssh login credentials.</p>
+<p>-Here in this scenario,we already know  ubuntu linux machine's ssh credentials (root:toor)</p>
+<p>-If we don't have ssh credentials or if the ssh port isn't open, using this tool is not possible.</p>
+<pre class="code-block">
+    <code class="language-bash">
+        #sshuttle command
+        sshuttle -r root@192.168.3.12 172.16.2.0/24 -x 192.168.3.12
+    </code>
+    </pre>
+<img src="image/sshuttle.png" height="200" width="600" ></img>
+   <p>The command explained:</p>
+   <p>-r => The remote ssh server we want to connect to (ubuntu linux machine with IP 192.168.3.12)</p>
+   <p>root => username for the ssh server we want to connect to</p>
+   <p>172.16.2.0/24 => the subnet we want the traffic to be forwarded to by the Ubuntu Linux machine which is dual homed in 2 networks</p>
+   <p>-x => excludes the traffic destined to 192.168.3.12 from being forwaded via the ssh tunnel (This is because we already can send traffic to Ubuntu Linux machine and there is no need to tunnel the traffic to it)</p>
+       
+   <p>When we run this command, sshuttle establishes an SSH connection to the remote server at 192.168.3.12 as the root user. It sets up a virtual tunnel interface on your local machine, routing all traffic destined for the specified subnet (172.16.2.0/24) through the SSH connection. The traffic is encrypted and forwarded to the remote server, which then sends it to the appropriate destination.</p>
+   <p>Initially, we couldn't access the 172.16.2.0/24 network, but due to the SSH tunnel we created using the Ubuntu Linux machine, it forwarded all the traffic to the 172.16.2.0/24 network on behalf of us.
+</p>
+<p>To prove the tunneling is successful, Lets try to RDP into the windows machine (just assume that i magically found the windows credentials):</p>
+<pre class="code-block">
+    <code class="language-bash">
+        #xfreerdp command to connect to windows machine with IP 172.16.2.5
+        xfreerdp /u:kate /p:Password2! +clipboard /dynamic-resolution /cert:ignore /v:172.16.2.5 /drive:/opt
+    </code>
+    </pre>
+    <img src="image/rdp.png" height="400" width="880" ></img>
+
+<br>
+<br>
+
+
+    <div class="neon-line"></div>
+</div>
+</body>
+</html>
