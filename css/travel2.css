@@ -52,7 +52,7 @@ header::before {
 }
 
 header h1 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'JetBrains Mono', monospace;
     font-size: 5rem;
     font-weight: 600;
     margin-bottom: 30px;
@@ -159,17 +159,6 @@ header::after {
     position: relative;
 }
 
-.quote::before {
-    content: '"';
-    position: absolute;
-    top: -10px;
-    left: 20px;
-    font-size: 4rem;
-    color: #4fc3f7;
-    opacity: 0.3;
-    font-family: 'Playfair Display', serif;
-}
-
 .quote p {
     font-style: italic;
     color: #b0b0b0;
@@ -270,6 +259,19 @@ img:hover {
     border-radius: 16px;
 }
 
+
+
+@keyframes pulse-glow {
+    0%, 100% {
+        opacity: 0.6;
+        box-shadow: 0 0 20px rgba(79, 195, 247, 0.4);
+    }
+    50% {
+        opacity: 1;
+        box-shadow: 0 0 30px rgba(79, 195, 247, 0.8);
+    }
+}
+
 @media (max-width: 1024px) {
     .container {
         max-width: 900px;
@@ -321,4 +323,3 @@ img:hover {
         width: 200px;
     }
 }
-
